@@ -64,7 +64,7 @@
             <a href="{% url 'shop' %}?category={{ cat.slug }}" class="group bg-white rounded-3xl border border-teal-50/80 overflow-hidden shadow-sm hover:shadow-xl hover:border-teal-500/20 transition-all duration-300 flex flex-col">
                 <div class="aspect-video w-full overflow-hidden bg-slate-100 relative">
                     {% if cat.image %}
-                        <img src="{{ cat.image.url }}" alt="{{ cat.name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <img src="{{ cat.image.url }}" alt="{{ cat.name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
                     {% else %}
                         <div class="w-full h-full flex items-center justify-center bg-teal-50">
                             <i class="fa-solid fa-images text-teal-300 text-3xl"></i>
@@ -137,7 +137,7 @@
                     <!-- Image -->
                     <div class="aspect-square w-full rounded-2xl overflow-hidden bg-slate-50 relative mb-4">
                         {% if product.images.exists %}
-                            <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
                         {% endif %}
                         <a href="{% url 'product_detail' product.id %}" class="absolute inset-0 bg-slate-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                             <span class="bg-white text-slate-900 font-bold text-xs px-6 py-2.5 rounded-full shadow-lg">View Details</span>

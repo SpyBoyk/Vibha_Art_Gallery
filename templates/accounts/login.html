@@ -378,8 +378,8 @@
         }
 
         .overlay-img {
-            width: 150px;
-            height: 150px;
+            width: 220px;
+            height: 220px;
             object-fit: cover;
             border-radius: 20px;
             border: 3px solid rgba(255, 255, 255, 0.4);
@@ -577,7 +577,7 @@
                     <button class="ghost" id="signIn">Sign In</button>
                 </div>
                 <div class="overlay-panel overlay-right">
-                    <img id="overlay-right-img" src="{% static 'images/login_illustration.png' %}" alt="Clay Ganesha" class="overlay-img">
+                    <img id="overlay-right-img" src="{% static 'images/Gemini_Generated_Image_vazkqcvazkqcvazk.png' %}" alt="Welcome Back" class="overlay-img">
                     <h1>Welcome Back!</h1>
                     <p>Log in to access your orders, track shipping, and continue exploring traditional treasures.</p>
                     <button class="ghost" id="signUp">Sign Up</button>
@@ -626,16 +626,10 @@
             '{% static "images/kanthi_har_illustration.png" %}',
             '{% static "images/jewellery_illustration.jfif" %}'
         ];
-        const overlayImagesRight = [
-            '{% static "images/login_illustration.png" %}',
-            '{% static "images/pooja_illustration.jfif" %}'
-        ];
         
         let leftIndex = 0;
-        let rightIndex = 0;
         
         const leftImgEl = document.getElementById('overlay-left-img');
-        const rightImgEl = document.getElementById('overlay-right-img');
 
         function rotateLeftOverlay() {
             if (leftImgEl) {
@@ -650,21 +644,7 @@
             }
         }
 
-        function rotateRightOverlay() {
-            if (rightImgEl) {
-                rightImgEl.style.opacity = '0';
-                rightImgEl.style.transform = 'scale(0.95)';
-                setTimeout(() => {
-                    rightIndex = (rightIndex + 1) % overlayImagesRight.length;
-                    rightImgEl.src = overlayImagesRight[rightIndex];
-                    rightImgEl.style.opacity = '1';
-                    rightImgEl.style.transform = 'scale(1)';
-                }, 400);
-            }
-        }
-
         setInterval(rotateLeftOverlay, 4500);
-        setInterval(rotateRightOverlay, 4500);
     </script>
 </body>
 </html>

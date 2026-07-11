@@ -68,6 +68,52 @@
             backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(124, 58, 237, 0.15);
         }
+        /* Hide ALL Google Translate UI completely */
+        .goog-te-banner-frame { display: none !important; }
+        .skiptranslate { display: none !important; }
+        .goog-te-gadget { display: none !important; }
+        #goog-gt-tt, .goog-te-balloon-frame { display: none !important; }
+        .goog-text-highlight { background: none !important; box-shadow: none !important; }
+        .goog-te-menu-value { display: none !important; }
+        body { top: 0 !important; position: static !important; }
+        .VIpgJd-ZVi9od-ORHb-OEVmcd, .VIpgJd-ZVi9od-aZ2wEe-wOHMyf,
+        .VIpgJd-ZVi9od-SmfAz, .VIpgJd-ZVi9od-xl07Ob-lTBxed,
+        .VIpgJd-ZVi9od-ORHb, .VIpgJd-suEOdc { display: none !important; }
+        iframe.skiptranslate, iframe[name="google_translate"] { display: none !important; height: 0 !important; }
+        .goog-te-gadget { font-size: 0 !important; }
+        /* Language toggle styling */
+        .lang-toggle {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+        }
+        .lang-toggle select {
+            appearance: none;
+            -webkit-appearance: none;
+            background: transparent;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 6px;
+            padding: 3px 22px 3px 6px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #1e1b4b;
+            cursor: pointer;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .lang-toggle select:focus {
+            border-color: #0d9488;
+        }
+        .lang-toggle::after {
+            content: '\f0ac';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            right: 6px;
+            font-size: 10px;
+            color: #0d9488;
+            pointer-events: none;
+        }
     </style>
     {% block extra_head %}{% endblock %}
 </head>
@@ -94,7 +140,15 @@
                 </nav>
 
                 <!-- Search & Actions -->
-                <div class="flex items-center space-x-6">
+                <div class="flex items-center space-x-4 sm:space-x-6">
+                    <!-- Language Toggle -->
+                    <div class="lang-toggle hidden sm:inline-flex">
+                        <select id="lang-select" onchange="changeLanguage(this.value)">
+                            <option value="en" selected>EN</option>
+                            <option value="hi">हिंदी</option>
+                            <option value="mr">मराठी</option>
+                        </select>
+                    </div>
                     <form action="{% url 'shop' %}" method="GET" class="hidden lg:flex items-center relative">
                         <input type="text" name="q" placeholder="Search crafts..." value="{{ query|default:'' }}" class="bg-beige-100/80 border border-gold-500/20 rounded-full px-4 py-1.5 pr-10 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 w-60">
                         <button type="submit" class="absolute right-3 text-bronze-900/60 hover:text-saffron-500">
@@ -234,6 +288,10 @@
             {% endif %}
             <span class="text-[9px] uppercase tracking-wider font-semibold">Bag</span>
         </a>
+        <div class="flex flex-col items-center gap-1 text-bronze-900/60 hover:text-saffron-500 transition-colors cursor-pointer" onclick="cycleMobileLang()">
+            <i class="fa-solid fa-globe text-lg"></i>
+            <span id="mobile-lang-label" class="text-[9px] uppercase tracking-wider font-semibold">EN</span>
+        </div>
         <a href="{% url 'profile' %}" class="flex flex-col items-center gap-1 text-bronze-900/60 hover:text-saffron-500 transition-colors">
             <i class="fa-regular fa-user text-lg"></i>
             <span class="text-[9px] uppercase tracking-wider font-semibold">Profile</span>
@@ -343,5 +401,72 @@
         });
     </script>
     {% block extra_js %}{% endblock %}
+
+    <!-- Google Translate (hidden, cookie-driven) -->
+    <div id="google_translate_element" style="display:none;"></div>
+    <script>
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'en,hi,mr',
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+
+        function changeLanguage(lang) {
+            // Set the googtrans cookie (both root and domain-level)
+            if (lang === 'en') {
+                // Remove translation — clear the cookie
+                document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+                document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=' + window.location.hostname + ';';
+            } else {
+                var val = '/en/' + lang;
+                document.cookie = 'googtrans=' + val + '; path=/;';
+                document.cookie = 'googtrans=' + val + '; path=/; domain=' + window.location.hostname + ';';
+            }
+            localStorage.setItem('vag_lang', lang);
+            // Reload to apply translation instantly
+            window.location.reload();
+        }
+
+        // Mobile language cycling (EN → हिंदी → मराठी → EN)
+        var mobileLangs = ['en', 'hi', 'mr'];
+        function cycleMobileLang() {
+            var current = localStorage.getItem('vag_lang') || 'en';
+            var idx = mobileLangs.indexOf(current);
+            var next = mobileLangs[(idx + 1) % mobileLangs.length];
+            changeLanguage(next);
+        }
+
+        // Sync UI labels on page load to reflect current language
+        (function() {
+            var saved = localStorage.getItem('vag_lang') || 'en';
+            var labels = { 'en': 'EN', 'hi': 'हि', 'mr': 'म' };
+            // Desktop select
+            var sel = document.getElementById('lang-select');
+            if (sel) sel.value = saved;
+            // Mobile label
+            var mob = document.getElementById('mobile-lang-label');
+            if (mob) mob.textContent = labels[saved] || saved.toUpperCase();
+        })();
+
+        // Kill any Google Translate UI the moment it appears
+        window.addEventListener('DOMContentLoaded', function() {
+            var observer = new MutationObserver(function() {
+                document.body.style.top = '0px';
+                document.querySelectorAll('.goog-te-banner-frame, iframe.skiptranslate').forEach(function(f) {
+                    f.style.display = 'none'; f.style.height = '0';
+                });
+                var tt = document.getElementById('goog-gt-tt');
+                if (tt) tt.style.display = 'none';
+                document.querySelectorAll('.skiptranslate').forEach(function(el) {
+                    if (el.id === 'google_translate_element') return;
+                    el.style.display = 'none';
+                });
+            });
+            observer.observe(document.documentElement, { childList: true, subtree: true, attributes: true });
+        });
+    </script>
+    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>

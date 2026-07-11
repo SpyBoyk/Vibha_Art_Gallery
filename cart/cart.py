@@ -1,3 +1,4 @@
+import copy
 from decimal import Decimal
 from django.conf import settings
 from products.models import Product
@@ -37,21 +38,26 @@ class Cart:
     def __iter__(self):
         product_ids = self.cart.keys()
         products = Product.objects.filter(id__in=product_ids)
-        cart = self.cart.copy()
+        # Deep copy so we never write Decimal objects back into the session
+        cart = copy.deepcopy(self.cart)
         
         for product in products:
             cart[str(product.id)]['product'] = product
 
-        for product_id, item in list(cart.items()):
+        # Clean up obsolete product IDs from the real session cart
+        valid_ids = {str(p.id) for p in products}
+        for product_id in list(self.cart.keys()):
+            if product_id not in valid_ids:
+                del self.cart[product_id]
+        if len(list(self.cart.keys())) != len(list(self.cart.keys())):
+            self.save()
+
+        for product_id, item in cart.items():
             if 'product' not in item:
-                # Remove obsolete product ID from the active session cart
-                if product_id in self.cart:
-                    del self.cart[product_id]
                 continue
             item['price'] = Decimal(item['price'])
             item['total_price'] = item['price'] * item['quantity']
             yield item
-        self.save()
 
     def __len__(self):
         return sum(item['quantity'] for item in self.cart.values())
