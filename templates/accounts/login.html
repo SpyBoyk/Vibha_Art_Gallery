@@ -10,6 +10,9 @@
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        html {
+            font-size: 90% !important;
+        }
         * {
             box-sizing: border-box;
         }
@@ -24,11 +27,10 @@
             align-items: center;
             flex-direction: column;
             font-family: 'Outfit', sans-serif;
-            min-height: 100vh;
+            height: 100vh;
             margin: 0;
-            overflow-y: auto;
+            overflow: hidden;
             position: relative;
-            padding: 20px 0;
         }
 
         h1 {
@@ -36,15 +38,15 @@
             font-weight: 700;
             margin: 0;
             color: #115e59;
-            font-size: 26px;
+            font-size: 20px;
         }
 
         p {
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 300;
-            line-height: 20px;
+            line-height: 16px;
             letter-spacing: 0.5px;
-            margin: 15px 0 25px;
+            margin: 5px 0 10px;
             color: #64748b;
         }
 
@@ -58,9 +60,9 @@
 
         a {
             color: #64748b;
-            font-size: 13px;
+            font-size: 12px;
             text-decoration: none;
-            margin: 15px 0;
+            margin: 8px 0;
             transition: color 0.2s;
         }
         
@@ -75,12 +77,12 @@
             color: #FFFFFF;
             font-size: 11px;
             font-weight: bold;
-            padding: 12px 40px;
+            padding: 10px 32px;
             letter-spacing: 1.5px;
             text-transform: uppercase;
             transition: transform 80ms ease-in, background-color 0.2s;
             cursor: pointer;
-            margin-top: 10px;
+            margin-top: 8px;
         }
         
         button:hover {
@@ -106,7 +108,7 @@
             background-color: rgba(255, 255, 255, 0.1);
             border-color: #FFFFFF;
         }
-
+        
         form {
             background-color: #FFFFFF;
             display: flex;
@@ -118,17 +120,66 @@
             text-align: center;
         }
 
+        .form-inner {
+            width: 100%;
+            max-width: 320px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
         input {
             background-color: #f0fdfa;
             border: 1px solid #ccfbf1;
-            padding: 12px 15px;
-            margin: 6px 0;
+            padding: 8px 12px;
+            margin: 4px 0;
             width: 100%;
-            border-radius: 10px;
+            max-width: 320px;
+            border-radius: 8px;
             font-family: inherit;
             font-size: 13px;
             outline: none;
             transition: border-color 0.2s, background-color 0.2s;
+            text-align: left;
+            box-sizing: border-box;
+        }
+        
+        input:focus {
+            border-color: #0d9488;
+            background-color: #fff;
+        }
+
+        button:not(.ghost) {
+            width: 100%;
+            max-width: 320px;
+            margin-top: 10px;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: #94a3b8;
+            font-size: 11px;
+            margin: 10px 0;
+            width: 100%;
+            max-width: 320px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .divider:not(:empty)::before {
+            margin-right: .75em;
+        }
+
+        .divider:not(:empty)::after {
+            margin-left: .75em;
         }
         
         input:focus {
@@ -145,7 +196,7 @@
             overflow: hidden;
             width: 96%;
             max-width: 1050px;
-            min-height: 500px;
+            min-height: 560px;
             margin: 40px 0;
             z-index: 10;
             border: 1px solid rgba(13,148,136,0.1);
@@ -269,6 +320,7 @@
 
         .social-container {
             margin: 15px 0;
+            text-align: center;
         }
 
         .social-container a {
@@ -278,8 +330,9 @@
             justify-content: center;
             align-items: center;
             margin: 0 5px;
-            height: 40px;
-            width: 40px;
+            height: 45px;
+            width: 45px;
+            font-size: 16px;
             color: #115e59;
             transition: border-color 0.2s, color 0.2s;
         }
@@ -409,7 +462,8 @@
             }
 
             form {
-                padding: 0 24px;
+                padding: 20px 24px;
+                overflow-y: auto;
             }
         }
     </style>
@@ -422,32 +476,42 @@
         <div class="form-container sign-up-container">
             <form method="POST" action="{% url 'register' %}">
                 {% csrf_token %}
-                <h1>Create Account</h1>
-                <div class="social-container">
-                    <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="social"><i class="fab fa-google"></i></a>
-                    <a href="#" class="social"><i class="fab fa-instagram"></i></a>
-                </div>
-                <span>or use your email for registration</span>
-                
-                <!-- Display registration errors if any -->
-                {% if register_errors %}
-                    <div style="margin-bottom: 5px;">
-                        {% for error in register_errors %}
-                            <span class="error-msg">{{ error }}</span>
-                        {% endfor %}
+                <div class="form-inner">
+                    <img src="{% static 'images/logo.png' %}" alt="Vibha Art Galleries" style="height: 48px; width: auto; margin-bottom: 8px; object-fit: contain;">
+                    <h1 style="margin-bottom: 2px;">Create Account</h1>
+                    <p style="margin: 5px 0 15px; font-size: 13px; color: #64748b;">Join us to explore premium Indian crafts</p>
+                    
+                    <!-- Display registration errors if any -->
+                    {% if register_errors %}
+                        <div style="margin-bottom: 5px; width: 100%;">
+                            {% for error in register_errors %}
+                                <span class="error-msg">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    <input type="text" name="username" placeholder="Username" required style="width: 100%;" />
+                    <input type="email" name="email" placeholder="Email Address" required style="width: 100%;" />
+                    <input type="text" name="phone_number" placeholder="Phone Number" required style="width: 100%;" />
+                    <input type="password" name="password1" placeholder="Password" required style="width: 100%;" />
+                    <input type="password" name="password2" placeholder="Confirm Password" required style="width: 100%;" />
+                    
+                    <button type="submit" style="margin-top: 10px;">Sign Up</button>
+
+                    <div class="divider">or continue with</div>
+
+                    <div style="display: flex; gap: 10px; width: 100%; margin: 5px 0 15px;">
+                        <a href="#" style="flex: 1; border: 1px solid #e2e8f0; border-radius: 10px; display: flex; justify-content: center; align-items: center; gap: 8px; height: 40px; margin: 0; font-size: 12px; color: #334155; font-weight: 600; background: #fafafa; transition: background 0.2s;">
+                            <i class="fab fa-google" style="color: #ea4335;"></i> Google
+                        </a>
+                        <a href="#" style="flex: 1; border: 1px solid #e2e8f0; border-radius: 10px; display: flex; justify-content: center; align-items: center; gap: 8px; height: 40px; margin: 0; font-size: 12px; color: #334155; font-weight: 600; background: #fafafa; transition: background 0.2s;">
+                            <i class="fab fa-facebook-f" style="color: #1877f2;"></i> Facebook
+                        </a>
                     </div>
-                {% endif %}
 
-                <input type="text" name="username" placeholder="Username" required />
-                <input type="email" name="email" placeholder="Email" required />
-                <input type="text" name="phone_number" placeholder="Phone Number" required />
-                <input type="password" name="password1" placeholder="Password" required />
-                <input type="password" name="password2" placeholder="Confirm Password" required />
-                <button type="submit">Sign Up</button>
-
-                <div class="mobile-toggle-wrapper">
-                    Already have an account? <span class="mobile-toggle-btn" id="mobile-to-signin">Sign In</span>
+                    <div class="mobile-toggle-wrapper" style="margin-top: 10px; font-size: 13px; color: #64748b;">
+                        Already have an account? <span class="mobile-toggle-btn" id="mobile-to-signin" style="color: #0d9488; font-weight: bold; text-decoration: underline;">Sign In</span>
+                    </div>
                 </div>
             </form>
         </div>
@@ -456,33 +520,49 @@
         <div class="form-container sign-in-container">
             <form method="POST" action="{% url 'login' %}">
                 {% csrf_token %}
-                <!-- Back Link -->
-                <a href="{% url 'home' %}" class="back-gallery"><i class="fa-solid fa-arrow-left"></i> Gallery</a>
-                
-                <h1>Sign In</h1>
-                <div class="social-container">
-                    <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="social"><i class="fab fa-google"></i></a>
-                    <a href="#" class="social"><i class="fab fa-instagram"></i></a>
-                </div>
-                <span>or use your account</span>
+                <div class="form-inner">
+                    <!-- Back Link -->
+                    <a href="{% url 'home' %}" class="back-gallery" style="position: static; margin-bottom: 15px; margin-left: 0; display: inline-flex; align-items: center; gap: 5px;"><i class="fa-solid fa-arrow-left"></i> Gallery</a>
+                    
+                    <img src="{% static 'images/logo.png' %}" alt="Vibha Art Galleries" style="height: 48px; width: auto; margin-bottom: 8px; object-fit: contain;">
+                    <h1 style="margin-bottom: 2px;">Welcome Back</h1>
+                    <p style="margin: 5px 0 20px; font-size: 13px; color: #64748b;">Sign in to your account</p>
 
-                <!-- Display login errors if any -->
-                {% if messages %}
-                    <div style="margin-bottom: 5px;">
-                        {% for message in messages %}
-                            <span class="error-msg">{{ message }}</span>
-                        {% endfor %}
+                    <!-- Display login errors if any -->
+                    {% if messages %}
+                        <div style="margin-bottom: 5px; width: 100%;">
+                            {% for message in messages %}
+                                <span class="error-msg">{{ message }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    <input type="text" name="username" placeholder="Username" required style="width: 100%;" />
+                    <input type="password" name="password" placeholder="Password" required style="width: 100%;" />
+                    
+                    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; margin: 10px 0; font-size: 13px;">
+                        <label style="display: flex; align-items: center; gap: 6px; color: #64748b; font-weight: normal; font-size: 13px; cursor: pointer; margin: 0; text-transform: none;">
+                            <input type="checkbox" name="remember_me" style="width: auto; margin: 0; transform: scale(1.1);" /> Remember me
+                        </label>
+                        <a href="#" style="margin: 0; font-size: 13px; color: #0d9488; font-weight: 600;">Forgot password?</a>
                     </div>
-                {% endif %}
+                    
+                    <button type="submit" style="margin-top: 10px;">Sign In</button>
 
-                <input type="text" name="username" placeholder="Username" required />
-                <input type="password" name="password" placeholder="Password" required />
-                <a href="#">Forgot your password?</a>
-                <button type="submit">Sign In</button>
+                    <div class="divider">or continue with</div>
 
-                <div class="mobile-toggle-wrapper">
-                    Don't have an account? <span class="mobile-toggle-btn" id="mobile-to-signup">Sign Up</span>
+                    <div style="display: flex; gap: 10px; width: 100%; margin: 5px 0 15px;">
+                        <a href="#" style="flex: 1; border: 1px solid #e2e8f0; border-radius: 10px; display: flex; justify-content: center; align-items: center; gap: 8px; height: 40px; margin: 0; font-size: 12px; color: #334155; font-weight: 600; background: #fafafa; transition: background 0.2s;">
+                            <i class="fab fa-google" style="color: #ea4335;"></i> Google
+                        </a>
+                        <a href="#" style="flex: 1; border: 1px solid #e2e8f0; border-radius: 10px; display: flex; justify-content: center; align-items: center; gap: 8px; height: 40px; margin: 0; font-size: 12px; color: #334155; font-weight: 600; background: #fafafa; transition: background 0.2s;">
+                            <i class="fab fa-facebook-f" style="color: #1877f2;"></i> Facebook
+                        </a>
+                    </div>
+
+                    <div class="mobile-toggle-wrapper" style="margin-top: 10px; font-size: 13px; color: #64748b;">
+                        Don't have an account? <span class="mobile-toggle-btn" id="mobile-to-signup" style="color: #0d9488; font-weight: bold; text-decoration: underline;">Sign Up</span>
+                    </div>
                 </div>
             </form>
         </div>

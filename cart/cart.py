@@ -42,10 +42,16 @@ class Cart:
         for product in products:
             cart[str(product.id)]['product'] = product
 
-        for item in cart.values():
+        for product_id, item in list(cart.items()):
+            if 'product' not in item:
+                # Remove obsolete product ID from the active session cart
+                if product_id in self.cart:
+                    del self.cart[product_id]
+                continue
             item['price'] = Decimal(item['price'])
             item['total_price'] = item['price'] * item['quantity']
             yield item
+        self.save()
 
     def __len__(self):
         return sum(item['quantity'] for item in self.cart.values())

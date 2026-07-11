@@ -12,7 +12,7 @@ from orders.models import Coupon
 User = get_user_model()
 
 class Command(BaseCommand):
-    help = "Loads Vibha Art Galleries master catalog 2026 data"
+    help = "Loads Vibha Art Galleries master catalog 2026 data with exact images"
 
     def handle(self, *args, **options):
         self.stdout.write("Clearing existing database records for clean load...")
@@ -46,17 +46,17 @@ class Command(BaseCommand):
 
         # 2. Create Categories (Sections A to F) & copy images
         cats_mapping = [
-            ("section-a-premium-metal-stand-busts", "Section A: Premium Metal Stand Busts", "Premium metal stand busts featuring adjustable heights and luxury suede finishes.", "images.jfif"),
-            ("section-b-multi-size-bust-collection", "Section B: Multi-Size Bust Collection", "Red, blue, and white suede bust collections in small, medium, and big sizes.", "images (1).jfif"),
-            ("section-c-metal-pu-display-stands", "Section C: Metal & PU Display Stands", "Metal & PU display stands for earrings, bangles, rings, and bracelets.", "images (2).jfif"),
-            ("section-d-premium-suede-display-trays", "Section D: Premium Suede Display Trays", "Premium suede display trays for earrings, rings, chains, and necklaces.", "images (3).jfif"),
-            ("section-e-premium-combo-sets", "Section E: Premium Combo Sets", "Ready-for-showroom display solutions, multi-ring props, and complete sets.", "images (4).jfif"),
-            ("section-f-luxury-combo-collection", "Section F: Luxury Combo Collection", "Premium Turkish designs and full display combo sets on wooden bases.", "images.jfif"),
+            ("section-a-premium-metal-stand-busts", "Section A: Premium Metal Stand Busts", "Premium metal stand busts featuring adjustable heights and luxury suede finishes.", "ADJUSTABLE RED BUST WITH METAL STAND.png"),
+            ("section-b-multi-size-bust-collection", "Section B: Multi-Size Bust Collection", "Red, blue, and white suede bust collections in small, medium, and big sizes.", "RED BUST SET - SMALL, MEDIUM, BIG.png"),
+            ("section-c-metal-pu-display-stands", "Section C: Metal & PU Display Stands", "Metal & PU display stands for earrings, bangles, rings, and bracelets.", "GOLD METAL EARRING STAND SET OF 3.png"),
+            ("section-d-premium-suede-display-trays", "Section D: Premium Suede Display Trays", "Premium suede display trays for earrings, rings, chains, and necklaces.", "PREMIUM EARRING TRAY.png"),
+            ("section-e-premium-combo-sets", "Section E: Premium Combo Sets", "Ready-for-showroom display solutions, multi-ring props, and complete sets.", "BLUE SUEDE COMPLETE DISPLAY SET.png"),
+            ("section-f-luxury-combo-collection", "Section F: Luxury Combo Collection", "Premium Turkish designs and full display combo sets on wooden bases.", "FULL DISPLAY COMBO SET - WOOD BASE.png"),
         ]
 
         cats = {}
         for slug, name, desc, img_file in cats_mapping:
-            new_img_name = f"{slug}.jfif"
+            new_img_name = f"{slug}.png"
             copied_path = copy_img(img_file, "categories", new_img_name)
             cat = Category.objects.create(
                 name=name,
@@ -93,7 +93,7 @@ class Command(BaseCommand):
                 "stock": 50,
                 "is_featured": True,
                 "is_trending": True,
-                "images_list": [("images (5).jfif", "red-bust-1.jfif"), ("images (6).jfif", "red-bust-2.jfif")]
+                "images_list": [("ADJUSTABLE RED BUST WITH METAL STAND.png", "red-bust-1.png")]
             },
             {
                 "category": cats["section-a-premium-metal-stand-busts"],
@@ -104,7 +104,7 @@ class Command(BaseCommand):
                 "stock": 35,
                 "is_featured": True,
                 "is_best_seller": True,
-                "images_list": [("images (6).jfif", "white-bust-1.jfif"), ("images (5).jfif", "white-bust-2.jfif")]
+                "images_list": [("LUXURY WHITE BUST 20 WITH METAL STAND.png", "white-bust-1.png")]
             },
             {
                 "category": cats["section-a-premium-metal-stand-busts"],
@@ -114,7 +114,7 @@ class Command(BaseCommand):
                 "price": 6500.00,
                 "stock": 15,
                 "is_featured": True,
-                "images_list": [("images (5).jfif", "dualtone-bust-1.jfif")]
+                "images_list": [("DUAL TONE BUST SET 20 ADJUSTABLE.png", "dualtone-bust-1.png")]
             },
             {
                 "category": cats["section-a-premium-metal-stand-busts"],
@@ -125,7 +125,7 @@ class Command(BaseCommand):
                 "stock": 20,
                 "is_featured": False,
                 "is_trending": True,
-                "images_list": [("images (6).jfif", "pink-bust-1.jfif")]
+                "images_list": [("MINI PINK BUST WITH STAND 20.png", "pink-bust-1.png")]
             },
 
             # Section B: Multi-Size Bust Collection
@@ -137,7 +137,7 @@ class Command(BaseCommand):
                 "price": 1100.00,
                 "stock": 40,
                 "is_featured": True,
-                "images_list": [("images (1).jfif", "red-trio-1.jfif")]
+                "images_list": [("RED BUST SET - SMALL, MEDIUM, BIG.png", "red-trio-1.png")]
             },
             {
                 "category": cats["section-b-multi-size-bust-collection"],
@@ -148,7 +148,7 @@ class Command(BaseCommand):
                 "stock": 25,
                 "is_featured": False,
                 "is_best_seller": True,
-                "images_list": [("images (1).jfif", "blue-round-1.jfif")]
+                "images_list": [("BLUE ROUND BUST 12.png", "blue-round-1.png")]
             },
             {
                 "category": cats["section-b-multi-size-bust-collection"],
@@ -158,7 +158,7 @@ class Command(BaseCommand):
                 "price": 3800.00,
                 "stock": 10,
                 "is_featured": False,
-                "images_list": [("images (1).jfif", "big-bust-1.jfif")]
+                "images_list": [("BIG BUST - ROYAL BLUE & WHITE.png", "big-bust-1.png")]
             },
             {
                 "category": cats["section-b-multi-size-bust-collection"],
@@ -168,7 +168,7 @@ class Command(BaseCommand):
                 "price": 2200.00,
                 "stock": 12,
                 "is_featured": False,
-                "images_list": [("images (1).jfif", "blue-pair-1.jfif")]
+                "images_list": [("MEDIUM BLUE BUST PAIR.png", "blue-pair-1.png")]
             },
 
             # Section C: Metal & PU Display Stands
@@ -181,7 +181,7 @@ class Command(BaseCommand):
                 "stock": 30,
                 "is_featured": True,
                 "is_trending": True,
-                "images_list": [("images (2).jfif", "earring-stand-1.jfif")]
+                "images_list": [("GOLD METAL EARRING STAND SET OF 3.png", "earring-stand-1.png")]
             },
             {
                 "category": cats["section-c-metal-pu-display-stands"],
@@ -191,7 +191,7 @@ class Command(BaseCommand):
                 "price": 1800.00,
                 "stock": 15,
                 "is_featured": False,
-                "images_list": [("images (2).jfif", "prop-stand-1.jfif")]
+                "images_list": [("PROP STAND WITH METAL ROD.png", "prop-stand-1.png")]
             },
             {
                 "category": cats["section-c-metal-pu-display-stands"],
@@ -202,7 +202,7 @@ class Command(BaseCommand):
                 "stock": 50,
                 "is_featured": False,
                 "is_best_seller": True,
-                "images_list": [("images (7).jfif", "pu-bracelet-1.jfif")]
+                "images_list": [("PU BRACELET STAND.png", "pu-bracelet-1.png")]
             },
             {
                 "category": cats["section-c-metal-pu-display-stands"],
@@ -212,7 +212,7 @@ class Command(BaseCommand):
                 "price": 880.00,
                 "stock": 60,
                 "is_featured": False,
-                "images_list": [("images (8).jfif", "tstand-earring-1.jfif")]
+                "images_list": [("GOLD T-STAND EARRING DISPLAY.png", "tstand-earring-1.png")]
             },
             {
                 "category": cats["section-c-metal-pu-display-stands"],
@@ -222,7 +222,7 @@ class Command(BaseCommand):
                 "price": 880.00,
                 "stock": 40,
                 "is_featured": False,
-                "images_list": [("images (2).jfif", "pillow-stand-1.jfif")]
+                "images_list": [("MULTI-COLOR PU PILLOW STAND.png", "pillow-stand-1.png")]
             },
             {
                 "category": cats["section-c-metal-pu-display-stands"],
@@ -232,7 +232,7 @@ class Command(BaseCommand):
                 "price": 1320.00,
                 "stock": 35,
                 "is_featured": False,
-                "images_list": [("images (2).jfif", "blue-ring-1.jfif")]
+                "images_list": [("BLUE SUEDE ROUND RING STAND.png", "blue-ring-1.png")]
             },
             {
                 "category": cats["section-c-metal-pu-display-stands"],
@@ -242,7 +242,7 @@ class Command(BaseCommand):
                 "price": 21320.00,
                 "stock": 5,
                 "is_featured": True,
-                "images_list": [("images (2).jfif", "blue-pillow-1.jfif")]
+                "images_list": [("BLUE SUEDE PILLOW STAND WITH METAL BASE.png", "blue-pillow-1.png")]
             },
             {
                 "category": cats["section-c-metal-pu-display-stands"],
@@ -252,7 +252,7 @@ class Command(BaseCommand):
                 "price": 880.00,
                 "stock": 30,
                 "is_featured": False,
-                "images_list": [("images (2).jfif", "orange-ring-1.jfif")]
+                "images_list": [("ORANGE SUEDE ROUND RING STAND.png", "orange-ring-1.png")]
             },
             {
                 "category": cats["section-c-metal-pu-display-stands"],
@@ -262,7 +262,7 @@ class Command(BaseCommand):
                 "price": 1100.00,
                 "stock": 25,
                 "is_featured": False,
-                "images_list": [("images (2).jfif", "blue-bangle-1.jfif")]
+                "images_list": [("NAVY BLUE BANGLE STAND WITH METAL.png", "blue-bangle-1.png")]
             },
             {
                 "category": cats["section-c-metal-pu-display-stands"],
@@ -272,7 +272,7 @@ class Command(BaseCommand):
                 "price": 1320.00,
                 "stock": 20,
                 "is_featured": False,
-                "images_list": [("images (2).jfif", "orange-pillow-1.jfif")]
+                "images_list": [("ORANGE SUEDE PILLOW STAND.png", "orange-pillow-1.png")]
             },
 
             # Section D: Premium Suede Display Trays
@@ -284,7 +284,7 @@ class Command(BaseCommand):
                 "price": 880.00,
                 "stock": 45,
                 "is_featured": True,
-                "images_list": [("images (3).jfif", "earring-tray-1.jfif")]
+                "images_list": [("PREMIUM EARRING TRAY.png", "earring-tray-1.png")]
             },
             {
                 "category": cats["section-d-premium-suede-display-trays"],
@@ -295,7 +295,7 @@ class Command(BaseCommand):
                 "stock": 30,
                 "is_featured": True,
                 "is_best_seller": True,
-                "images_list": [("images (3).jfif", "bracelet-tray-1.jfif")]
+                "images_list": [("BRACELET TRAY.png", "bracelet-tray-1.png")]
             },
             {
                 "category": cats["section-d-premium-suede-display-trays"],
@@ -305,7 +305,7 @@ class Command(BaseCommand):
                 "price": 2750.00,
                 "stock": 35,
                 "is_featured": False,
-                "images_list": [("images (4).jfif", "chain-tray-1.jfif")]
+                "images_list": [("SMALL CHAIN TRAY - 3 CHANNEL.png", "chain-tray-1.png")]
             },
             {
                 "category": cats["section-d-premium-suede-display-trays"],
@@ -315,7 +315,7 @@ class Command(BaseCommand):
                 "price": 2715.00,
                 "stock": 30,
                 "is_featured": False,
-                "images_list": [("images (3).jfif", "single-neck-1.jfif")]
+                "images_list": [("NECKLACE TRAY - SINGLE NECK.png", "single-neck-1.png")]
             },
             {
                 "category": cats["section-d-premium-suede-display-trays"],
@@ -325,7 +325,7 @@ class Command(BaseCommand):
                 "price": 960.00,
                 "stock": 40,
                 "is_featured": False,
-                "images_list": [("images (3).jfif", "ring-tray-1.jfif")]
+                "images_list": [("RING TRAY - 5 SLOT.png", "ring-tray-1.png")]
             },
             {
                 "category": cats["section-d-premium-suede-display-trays"],
@@ -335,7 +335,7 @@ class Command(BaseCommand):
                 "price": 2660.00,
                 "stock": 25,
                 "is_featured": False,
-                "images_list": [("images (3).jfif", "combo-ring-1.jfif")]
+                "images_list": [("COMBO RING STAND TRAY.png", "combo-ring-1.png")]
             },
             {
                 "category": cats["section-d-premium-suede-display-trays"],
@@ -345,7 +345,7 @@ class Command(BaseCommand):
                 "price": 1200.00,
                 "stock": 18,
                 "is_featured": False,
-                "images_list": [("images (3).jfif", "pillow-bracelet-1.jfif")]
+                "images_list": [("BRACELET STAND TRAY 6 PILLOW.png", "pillow-bracelet-1.png")]
             },
 
             # Section E: Premium Combo Sets
@@ -358,7 +358,7 @@ class Command(BaseCommand):
                 "stock": 10,
                 "is_featured": True,
                 "is_trending": True,
-                "images_list": [("images (4).jfif", "maroon-combo-1.jfif")]
+                "images_list": [("BUST + EARRING STAND COMBO SET.png", "maroon-combo-1.png")]
             },
             {
                 "category": cats["section-e-premium-combo-sets"],
@@ -368,7 +368,7 @@ class Command(BaseCommand):
                 "price": 2200.00,
                 "stock": 12,
                 "is_featured": False,
-                "images_list": [("images (4).jfif", "grey-combo-1.jfif")]
+                "images_list": [("GREY SUEDE EARRING STAND SET.png", "grey-combo-1.png")]
             },
             {
                 "category": cats["section-e-premium-combo-sets"],
@@ -378,7 +378,7 @@ class Command(BaseCommand):
                 "price": 3200.00,
                 "stock": 14,
                 "is_featured": False,
-                "images_list": [("images (4).jfif", "peach-combo-1.jfif")]
+                "images_list": [("BUST WITH PROPS COMBO - METAL NECK.png", "peach-combo-1.png")]
             },
             {
                 "category": cats["section-e-premium-combo-sets"],
@@ -388,7 +388,7 @@ class Command(BaseCommand):
                 "price": 3500.00,
                 "stock": 8,
                 "is_featured": False,
-                "images_list": [("images (4).jfif", "blue-pillow-combo-1.jfif")]
+                "images_list": [("BLUE SUEDE PILLOW BANGLE STAND SET.png", "blue-pillow-combo-1.png")]
             },
             {
                 "category": cats["section-e-premium-combo-sets"],
@@ -398,7 +398,7 @@ class Command(BaseCommand):
                 "price": 1400.00,
                 "stock": 15,
                 "is_featured": False,
-                "images_list": [("images (4).jfif", "ring-props-1.jfif")]
+                "images_list": [("COMBO RING PROPS - BLACK SUEDE.png", "ring-props-1.png")]
             },
             {
                 "category": cats["section-e-premium-combo-sets"],
@@ -408,7 +408,7 @@ class Command(BaseCommand):
                 "price": 3800.00,
                 "stock": 7,
                 "is_featured": False,
-                "images_list": [("images (4).jfif", "bust-trio-1.jfif")]
+                "images_list": [("PREMIUM BUST TRIO COMBO.png", "bust-trio-1.png")]
             },
             {
                 "category": cats["section-e-premium-combo-sets"],
@@ -418,7 +418,7 @@ class Command(BaseCommand):
                 "price": 4500.00,
                 "stock": 8,
                 "is_featured": True,
-                "images_list": [("IMG-20220806-WA0000.jpg", "bluesuede-set-1.jpg")]
+                "images_list": [("BLUE SUEDE COMPLETE DISPLAY SET.png", "bluesuede-set-1.png")]
             },
             {
                 "category": cats["section-e-premium-combo-sets"],
@@ -428,7 +428,7 @@ class Command(BaseCommand):
                 "price": 3200.00,
                 "stock": 11,
                 "is_featured": False,
-                "images_list": [("IMG-20220806-WA0000.jpg", "bluesuede-compact-1.jpg")]
+                "images_list": [("BLUE SUEDE NECKBUST SET - COMPACT.png", "bluesuede-compact-1.png")]
             },
 
             # Section F: Luxury Combo Collection
@@ -440,7 +440,7 @@ class Command(BaseCommand):
                 "price": 4800.00,
                 "stock": 6,
                 "is_featured": True,
-                "images_list": [("images.jfif", "turkish-combo-1.jfif")]
+                "images_list": [("TURKISH BUST LUXURY COMBO WITH PROPS.png", "turkish-combo-1.png")]
             },
             {
                 "category": cats["section-f-luxury-combo-collection"],
@@ -450,7 +450,7 @@ class Command(BaseCommand):
                 "price": 3600.00,
                 "stock": 5,
                 "is_featured": False,
-                "images_list": [("images.jfif", "blue-gold-combo-1.jfif")]
+                "images_list": [("BUST WITH PROPS COMBO.png", "blue-gold-combo-1.png")]
             },
             {
                 "category": cats["section-f-luxury-combo-collection"],
@@ -460,7 +460,7 @@ class Command(BaseCommand):
                 "price": 2800.00,
                 "stock": 8,
                 "is_featured": False,
-                "images_list": [("images.jfif", "brown-wood-combo-1.jfif")]
+                "images_list": [("COMPLETE NECK + BRACELET COMBO SET.png", "brown-wood-combo-1.png")]
             },
             {
                 "category": cats["section-f-luxury-combo-collection"],
@@ -470,7 +470,7 @@ class Command(BaseCommand):
                 "price": 9500.00,
                 "stock": 3,
                 "is_featured": True,
-                "images_list": [("images.jfif", "grey-wood-combo-1.jfif")]
+                "images_list": [("FULL DISPLAY COMBO SET - WOOD BASE.png", "grey-wood-combo-1.png")]
             }
         ]
 

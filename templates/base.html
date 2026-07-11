@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
@@ -50,6 +51,9 @@
     <!-- AOS Scroll Animations CSS -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
+        html {
+            font-size: 90% !important;
+        }
         body {
             font-family: 'Outfit', sans-serif;
             background-color: #FAFAFA;
@@ -72,12 +76,11 @@
     <!-- Header / Navbar -->
     <header class="sticky top-0 z-40 glass-nav shadow-sm transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-20">
+            <div class="flex items-center justify-between py-2 sm:py-3">
                 <!-- Logo -->
                 <div class="flex-shrink-0">
-                    <a href="{% url 'home' %}" class="flex flex-col">
-                        <span class="heading-serif text-2xl font-bold tracking-widest text-saffron-500">VIBHA ART GALLERY</span>
-                        <span class="text-[9px] uppercase tracking-[0.25em] text-gold-600 font-semibold -mt-1">Handcrafted Luxury</span>
+                    <a href="{% url 'home' %}" class="flex items-center gap-3">
+                        <img src="{% static 'images/logo.png' %}" alt="Vibha Art Galleries" class="h-24 w-auto object-contain">
                     </a>
                 </div>
 
@@ -280,8 +283,27 @@
     </div>
 
     <script>
+        let hideTimeout;
+
+        function showChatAlert() {
+            const alertEl = document.getElementById('chat-alert');
+            if (!alertEl) return;
+            alertEl.style.display = 'block';
+            // Force reflow
+            alertEl.offsetHeight;
+            alertEl.style.opacity = '1';
+            alertEl.style.transform = 'translateY(0)';
+
+            // Auto-hide after 2 seconds
+            clearTimeout(hideTimeout);
+            hideTimeout = setTimeout(() => {
+                dismissChatAlert();
+            }, 2000);
+        }
+
         function dismissChatAlert() {
             const alertEl = document.getElementById('chat-alert');
+            if (!alertEl) return;
             alertEl.style.opacity = '0';
             alertEl.style.transform = 'translateY(20px)';
             setTimeout(() => {
@@ -290,9 +312,25 @@
         }
 
         function showChatForm() {
+            // Cancel auto-hide when user starts interacting
+            clearTimeout(hideTimeout);
             document.getElementById('chat-alert-msg').classList.add('hidden');
             document.getElementById('chat-alert-form').classList.remove('hidden');
         }
+
+        // Initialize timers on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            // Show alert initially, then auto-hide after 2 seconds
+            showChatAlert();
+
+            // Re-trigger every 5 minutes (300,000 ms)
+            setInterval(() => {
+                // Return alert to message view state in case user left it on form
+                document.getElementById('chat-alert-msg').classList.remove('hidden');
+                document.getElementById('chat-alert-form').classList.add('hidden');
+                showChatAlert();
+            }, 300000);
+        });
     </script>
 
     <!-- AOS Scroll Animations JS -->
