@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }} - Kala Mandir{% endblock %}
+
+{% block content %}
+<div class="max-w-xl mx-auto px-4 py-16">
+    <div class="bg-white p-8 rounded-2xl border border-gold-500/10 shadow-lg space-y-6">
+        <h1 class="heading-serif text-2xl font-bold text-bronze-900 border-b border-gold-500/10 pb-4">{{ title }}</h1>
+
+        <form method="POST" class="space-y-4">
+            {% csrf_token %}
+            {% for field in form %}
+                {% if field.name == 'is_default' %}
+                    <div class="flex items-center space-x-2">
+                        {{ field }}
+                        <label class="text-sm font-semibold text-bronze-900/80">{{ field.label }}</label>
+                    </div>
+                {% else %}
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-bronze-900/70 mb-2">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.errors %}
+                            <p class="text-red-500 text-xs mt-1">{{ field.errors.as_text }}</p>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            {% endfor %}
+            
+            <div class="pt-4 flex gap-4">
+                <button type="submit" class="bg-saffron-500 hover:bg-saffron-600 text-white font-bold py-3 px-8 rounded-full shadow-md transition-colors text-sm">
+                    Save Address
+                </button>
+                <a href="{% url 'profile' %}" class="bg-beige-100 hover:bg-beige-200 text-bronze-900 font-bold py-3 px-8 rounded-full transition-colors text-sm text-center">
+                    Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

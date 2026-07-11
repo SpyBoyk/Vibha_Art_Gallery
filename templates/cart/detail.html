@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+
+{% block title %}Shopping Bag - Kala Mandir{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
+    <div class="text-center space-y-2 mb-12">
+        <h1 class="heading-serif text-4xl font-bold text-bronze-900">Your Shopping Bag</h1>
+        <div class="h-[2px] w-20 bg-gold-500 mx-auto"></div>
+    </div>
+
+    {% if cart|length > 0 %}
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+            <!-- Cart Items Col -->
+            <div class="lg:col-span-2 space-y-6">
+                {% for item in cart %}
+                    {% with product=item.product %}
+                        <div class="bg-white p-6 rounded-2xl border border-gold-500/10 shadow-sm flex flex-col sm:flex-row items-center gap-6">
+                            <!-- Image -->
+                            <div class="w-24 h-24 bg-beige-100 rounded-xl overflow-hidden flex-shrink-0 flex items-center justify-center border border-gold-500/10">
+                                {% if product.images.first %}
+                                    <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}" class="w-full h-full object-cover">
+                                {% else %}
+                                    <i class="fa-solid fa-gifts text-3xl text-gold-500/20"></i>
+                                {% endif %}
+                            </div>
+
+                            <!-- Details -->
+                            <div class="flex-grow text-center sm:text-left space-y-1">
+                                <span class="text-xs text-gold-600 font-bold uppercase tracking-wider">{{ product.category.name }}</span>
+                                <h3 class="font-bold text-bronze-900 text-lg hover:text-saffron-500 transition-colors">
+                                    <a href="{% url 'product_detail' product.slug %}">{{ product.name }}</a>
+                                </h3>
+                                <p class="text-xs text-bronze-900/40">SKU: {{ product.sku }}</p>
+                                <div class="pt-2 flex items-center justify-center sm:justify-start gap-4">
+                                    <span class="text-sm font-semibold text-bronze-900">Price: ₹{{ item.price }}</span>
+                                    <span class="text-sm font-bold text-saffron-500">Total: ₹{{ item.total_price }}</span>
+                                </div>
+                            </div>
+
+                            <!-- Actions -->
+                            <div class="flex flex-col items-center gap-3">
+                                <div class="text-xs font-bold uppercase tracking-wider text-bronze-900/60">
+                                    Quantity: <span class="text-bronze-900">{{ item.quantity }}</span>
+                                </div>
+                                <a href="{% url 'cart_remove' product.id %}" class="text-red-500 hover:text-red-700 text-xs font-bold uppercase tracking-widest flex items-center gap-1">
+                                    <i class="fa-regular fa-trash-can"></i> Remove
+                                </a>
+                            </div>
+                        </div>
+                    {% endwith %}
+                {% endfor %}
+            </div>
+
+            <!-- Summary Col -->
+            <div class="space-y-6">
+                <div class="bg-white p-8 rounded-2xl border border-gold-500/10 shadow-sm space-y-6">
+                    <h3 class="heading-serif text-xl font-bold text-bronze-900 border-b border-gold-500/10 pb-4">Order Summary</h3>
+                    
+                    <div class="space-y-3 text-sm">
+                        <div class="flex justify-between">
+                            <span class="text-bronze-900/60">Subtotal</span>
+                            <span class="font-semibold text-bronze-900">₹{{ cart.get_total_price }}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-bronze-900/60">Shipping</span>
+                            <span class="font-semibold text-green-700">FREE</span>
+                        </div>
+                        {% if request.session.coupon_id %}
+                            <div class="flex justify-between text-saffron-500 font-semibold">
+                                <span>Coupon Applied</span>
+                                <span>Discount Calculated at Checkout</span>
+                            </div>
+                        {% endif %}
+                        <div class="border-t border-gold-500/10 pt-4 flex justify-between text-lg font-bold">
+                            <span>Estimated Total</span>
+                            <span class="text-bronze-900">₹{{ cart.get_total_price }}</span>
+                        </div>
+                    </div>
+
+                    <a href="{% url 'checkout' %}" class="block text-center bg-saffron-500 hover:bg-saffron-600 text-white font-bold py-3.5 rounded-full shadow-lg shadow-saffron-500/20 transition-colors w-full">
+                        Proceed to Checkout
+                    </a>
+                </div>
+
+                <!-- Coupon Box -->
+                <div class="bg-white p-6 rounded-2xl border border-gold-500/10 shadow-sm space-y-4">
+                    <h4 class="font-bold text-bronze-900 text-sm">Apply Promo Coupon</h4>
+                    <form action="{% url 'apply_coupon' %}" method="POST" class="flex gap-2">
+                        {% csrf_token %}
+                        <input type="text" name="code" placeholder="Enter code (e.g. WELCOME10)" required class="bg-beige-50 border border-gold-500/20 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-gold-500 w-full uppercase">
+                        <button type="submit" class="bg-bronze-900 hover:bg-bronze-950 text-gold-100 font-bold px-4 py-2 rounded-lg text-sm transition-colors">
+                            Apply
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="text-center py-20 bg-white rounded-3xl border border-gold-500/10 shadow-sm max-w-2xl mx-auto space-y-6">
+            <i class="fa-solid fa-bag-shopping text-6xl text-gold-500/20"></i>
+            <h2 class="heading-serif text-2xl font-bold text-bronze-900">Your bag is empty</h2>
+            <p class="text-sm text-bronze-900/60 max-w-sm mx-auto">
+                Fill it with our premium handcrafted creations to experience authentic traditional elegance.
+            </p>
+            <a href="{% url 'shop' %}" class="inline-block bg-saffron-500 hover:bg-saffron-600 text-white px-8 py-3 rounded-full font-bold shadow-lg shadow-saffron-500/20 transition-colors">
+                Start Shopping
+            </a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

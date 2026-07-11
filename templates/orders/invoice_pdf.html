@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Invoice #{{ order.id }} - Vibha Art Gallery</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            color: #333;
+            padding: 40px;
+            max-width: 800px;
+            margin: 0 auto;
+            border: 1px solid #eee;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 2px solid #D4AF37;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #E25822;
+        }
+        .invoice-title {
+            font-size: 20px;
+            font-weight: bold;
+            text-align: right;
+        }
+        .details-table {
+            width: 100%;
+            margin-bottom: 30px;
+        }
+        .details-table td {
+            vertical-align: top;
+            width: 50%;
+        }
+        .items-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+        .items-table th, .items-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        .items-table th {
+            background-color: #f5f2eb;
+        }
+        .total-box {
+            text-align: right;
+            font-size: 16px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div>
+            <div class="logo">VIBHA ART GALLERY</div>
+            <div style="font-size: 12px; color: #666; margin-top: 5px;">Premium Handcrafted Luxury</div>
+        </div>
+        <div class="invoice-title">
+            INVOICE<br>
+            <span style="font-size: 12px; color: #666; font-weight: normal;">Order #{{ order.id }}</span>
+        </div>
+    </div>
+
+    <table class="details-table">
+        <tr>
+            <td>
+                <strong>Billed To:</strong><br>
+                {{ order.first_name }} {{ order.last_name }}<br>
+                {{ order.email }}<br>
+                Phone: {{ order.phone }}
+            </td>
+            <td>
+                <strong>Shipping Address:</strong><br>
+                {{ order.address_line_1 }}<br>
+                {% if order.address_line_2 %}{{ order.address_line_2 }}<br>{% endif %}
+                {{ order.city }}, {{ order.state }} - {{ order.postal_code }}<br>
+                {{ order.country }}
+            </td>
+        </tr>
+    </table>
+
+    <table class="items-table">
+        <thead>
+            <tr>
+                <th>Product Description</th>
+                <th>Quantity</th>
+                <th>Unit Price</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in order.items.all %}
+                <tr>
+                    <td>{{ item.product.name }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>₹{{ item.price }}</td>
+                    <td>₹{{ item.price }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="total-box">
+        {% if order.discount_amount > 0 %}
+            <div style="margin-bottom: 5px; color: #E25822;">Discount Applied: -₹{{ order.discount_amount }}</div>
+        {% endif %}
+        <div>Total Invoice Value: ₹{{ order.total_amount }}</div>
+    </div>
+
+    <div style="margin-top: 50px; text-align: center; font-size: 12px; color: #999; border-top: 1px solid #eee; padding-top: 20px;">
+        Thank you for purchasing handcrafted creations and supporting local artisans.
+    </div>
+
+</body>
+</html>

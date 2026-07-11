@@ -1,0 +1,219 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ product.name }} - Vibha Art Gallery{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+        <!-- Gallery Column -->
+        <div class="space-y-4">
+            <div class="h-[400px] sm:h-[500px] bg-beige-100 rounded-2xl overflow-hidden border border-gold-500/10 flex items-center justify-center relative">
+                {% if product.images.first %}
+                    <img id="main-image" src="{{ product.images.first.image.url }}" alt="{{ product.name }}" class="w-full h-full object-cover">
+                {% else %}
+                    <i class="fa-solid fa-gifts text-8xl text-gold-500/20"></i>
+                {% endif %}
+            </div>
+            
+            <!-- Thumbnails -->
+            <div class="flex gap-4 overflow-x-auto pb-2">
+                {% for img in images %}
+                    <button onclick="changeMainImage('{{ img.image.url }}')" class="w-20 h-20 bg-beige-100 rounded-lg overflow-hidden border border-gold-500/10 flex-shrink-0 focus:outline-none focus:ring-2 focus:ring-saffron-500">
+                        <img src="{{ img.image.url }}" alt="Thumbnail" class="w-full h-full object-cover">
+                    </button>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Info Column -->
+        <div class="space-y-6">
+            <div>
+                <span class="text-xs text-gold-600 font-bold uppercase tracking-wider">{{ product.category.name }}</span>
+                <h1 class="heading-serif text-3xl sm:text-4xl font-bold text-bronze-900 mt-2">{{ product.name }}</h1>
+                <p class="text-xs text-bronze-900/40 mt-1">SKU: {{ product.sku }}</p>
+            </div>
+
+            <!-- Rating summary -->
+            <div class="flex items-center space-x-2 text-gold-500">
+                <div class="flex">
+                    {% for i in "12345" %}
+                        <i class="fa-solid fa-star text-sm"></i>
+                    {% endfor %}
+                </div>
+                <span class="text-sm font-semibold text-bronze-900">{{ product.average_rating }} ({{ product.review_count }} Reviews)</span>
+            </div>
+
+            <!-- Pricing -->
+            <div class="border-y border-gold-500/10 py-4">
+                {% if product.has_discount %}
+                    <div class="flex items-baseline space-x-3">
+                        <span class="text-3xl font-bold text-saffron-500">₹{{ product.discount_price }}</span>
+                        <span class="text-lg text-bronze-900/40 line-through">₹{{ product.price }}</span>
+                        <span class="bg-saffron-100 text-saffron-600 text-xs font-bold px-2.5 py-1 rounded-full">
+                            Save {{ product.get_discount_percentage }}%
+                        </span>
+                    </div>
+                {% else %}
+                    <span class="text-3xl font-bold text-bronze-900">₹{{ product.price }}</span>
+                {% endif %}
+            </div>
+
+            <!-- Description -->
+            <p class="text-sm text-bronze-900/70 leading-relaxed">
+                {{ product.description|linebreaksbr }}
+            </p>
+
+            <!-- Stock status & Checkout buttons -->
+            <div class="space-y-4 pt-4">
+                {% if product.stock > 0 %}
+                    <div class="flex items-center space-x-2">
+                        <span class="w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse"></span>
+                        <span class="text-sm text-green-700 font-semibold">In Stock (Only {{ product.stock }} units left)</span>
+                    </div>
+
+                    <form action="{% url 'cart_add' product.id %}" method="POST" class="flex flex-col sm:flex-row gap-4">
+                        {% csrf_token %}
+                        <div class="flex items-center border border-gold-500/20 rounded-full w-fit bg-beige-50">
+                            <button type="button" onclick="adjustQty(-1)" class="px-4 py-2 text-bronze-900/60 hover:text-bronze-900 font-bold">-</button>
+                            <input type="number" id="qty-input" name="quantity" value="1" min="1" max="{{ product.stock }}" class="w-12 text-center bg-transparent border-0 focus:ring-0 text-sm font-semibold">
+                            <button type="button" onclick="adjustQty(1)" class="px-4 py-2 text-bronze-900/60 hover:text-bronze-900 font-bold">+</button>
+                        </div>
+                        <button type="submit" class="bg-saffron-500 hover:bg-saffron-600 text-white px-8 py-3 rounded-full font-bold shadow-lg shadow-saffron-500/20 transition-colors flex-grow sm:flex-grow-0">
+                            Add to Cart
+                        </button>
+                    </form>
+                {% else %}
+                    <div class="flex items-center space-x-2">
+                        <span class="w-2.5 h-2.5 bg-red-600 rounded-full"></span>
+                        <span class="text-sm text-red-600 font-semibold">Sold Out</span>
+                    </div>
+                    <button disabled class="bg-bronze-900/20 text-bronze-900/40 px-8 py-3 rounded-full font-bold cursor-not-allowed w-full sm:w-auto">
+                        Out of Stock
+                    </button>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Related Products -->
+    {% if related_products %}
+        <div class="border-t border-gold-500/10 pt-16 mb-16">
+            <h2 class="heading-serif text-2xl font-bold text-bronze-900 mb-8">Related Creations</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+                {% for prod in related_products %}
+                    <div class="bg-white rounded-2xl overflow-hidden border border-gold-500/10 shadow-sm hover:shadow-lg transition-all group flex flex-col h-full">
+                        <div class="relative overflow-hidden bg-beige-100 h-56 flex items-center justify-center">
+                            {% if prod.images.first %}
+                                <img src="{{ prod.images.first.image.url }}" alt="{{ prod.name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-350">
+                            {% else %}
+                                <i class="fa-solid fa-gifts text-4xl text-gold-500/20"></i>
+                            {% endif %}
+                        </div>
+                        <div class="p-4 flex flex-col flex-grow">
+                            <h3 class="font-bold text-bronze-900 text-sm hover:text-saffron-500 transition-colors mb-1">
+                                <a href="{% url 'product_detail' prod.slug %}">{{ prod.name }}</a>
+                            </h3>
+                            <span class="text-sm font-bold text-saffron-500 mt-auto">₹{{ prod.get_price }}</span>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+    <!-- Reviews Section -->
+    <div class="border-t border-gold-500/10 pt-16 grid grid-cols-1 lg:grid-cols-3 gap-12">
+        <div class="space-y-6">
+            <h2 class="heading-serif text-2xl font-bold text-bronze-900">Patron Feedback</h2>
+            <div class="bg-beige-100 p-6 rounded-2xl border border-gold-500/10 text-center space-y-2">
+                <span class="text-5xl font-bold text-bronze-900">{{ product.average_rating }}</span>
+                <span class="text-xs text-bronze-900/40 block">Out of 5.0 stars</span>
+                <div class="flex justify-center text-gold-500 py-2">
+                    {% for i in "12345" %}
+                        <i class="fa-solid fa-star text-sm"></i>
+                    {% endfor %}
+                </div>
+                <span class="text-xs text-bronze-900/60 font-semibold uppercase tracking-wider block">Based on {{ product.review_count }} reviews</span>
+            </div>
+
+            <!-- Review form -->
+            {% if user.is_authenticated %}
+                <div class="bg-white p-6 rounded-2xl border border-gold-500/10 shadow-sm space-y-4">
+                    <h3 class="heading-serif font-bold text-bronze-900">Leave a Review</h3>
+                    <form method="POST" class="space-y-4">
+                        {% csrf_token %}
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-bronze-900/70 mb-2">Rating</label>
+                            {{ review_form.rating }}
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-bronze-900/70 mb-2">Title</label>
+                            {{ review_form.title }}
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-bronze-900/70 mb-2">Review Content</label>
+                            {{ review_form.content }}
+                        </div>
+                        <button type="submit" class="bg-saffron-500 hover:bg-saffron-600 text-white font-bold py-2 px-6 rounded-full text-sm shadow-md transition-colors">
+                            Submit Review
+                        </button>
+                    </form>
+                </div>
+            {% else %}
+                <div class="bg-amber-50 border border-amber-200/50 p-6 rounded-2xl text-center">
+                    <p class="text-sm text-amber-800">Please <a href="{% url 'login' %}?next={{ request.path }}" class="font-bold underline">log in</a> to write a product review.</p>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="lg:col-span-2 space-y-6">
+            <h3 class="heading-serif text-xl font-bold text-bronze-900 mb-4">Patron Reviews</h3>
+            <div class="space-y-6">
+                {% for rev in reviews %}
+                    <div class="bg-white p-6 rounded-2xl border border-gold-500/10 shadow-sm space-y-3">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-8 h-8 rounded-full bg-saffron-100 text-saffron-500 flex items-center justify-center font-bold text-sm">
+                                    {{ rev.user.username|slice:":1"|upper }}
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-sm text-bronze-900">{{ rev.user.username }}</h4>
+                                    <span class="text-[10px] text-bronze-900/40">{{ rev.created_at|date:"d M Y" }}</span>
+                                </div>
+                            </div>
+                            <div class="flex text-gold-500 text-xs">
+                                {% for i in "12345" %}
+                                    {% if forloop.counter <= rev.rating %}
+                                        <i class="fa-solid fa-star"></i>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <h4 class="font-bold text-bronze-900 text-sm">{{ rev.title }}</h4>
+                        <p class="text-sm text-bronze-900/70 leading-relaxed">{{ rev.content }}</p>
+                    </div>
+                {% empty %}
+                    <p class="text-sm text-bronze-900/40 italic">Be the first to review this creation.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    function changeMainImage(url) {
+        document.getElementById('main-image').src = url;
+    }
+
+    function adjustQty(amount) {
+        const input = document.getElementById('qty-input');
+        let val = parseInt(input.value) + amount;
+        const max = parseInt(input.max);
+        if (val < 1) val = 1;
+        if (val > max) val = max;
+        input.value = val;
+    }
+</script>
+{% endblock %}

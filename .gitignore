@@ -1,0 +1,14 @@
+*.pyc
+*~
+__pycache__/
+db.sqlite3
+.my_env/
+.venv/
+env/
+venv/
+ENV/
+media/categories/
+media/products/
+.DS_Store
+.idea/
+.vscode/

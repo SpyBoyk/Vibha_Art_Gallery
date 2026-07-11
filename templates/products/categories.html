@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Explore Categories - Vibha Art Gallery{% endblock %}
+
+{% block content %}
+<section class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center space-y-2 mb-12">
+        <span class="text-saffron-500 font-bold tracking-widest text-xs uppercase font-semibold">Exquisite Collections</span>
+        <h1 class="heading-serif text-4xl font-bold text-bronze-900">Explore Categories</h1>
+        <div class="h-[2px] w-20 bg-gold-500 mx-auto"></div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {% for cat in categories %}
+            <div class="bg-white rounded-2xl overflow-hidden border border-gold-500/10 shadow-sm hover:shadow-xl transition-all group flex flex-col h-full">
+                <div class="h-64 bg-beige-100 relative overflow-hidden flex items-center justify-center">
+                    {% if cat.image %}
+                        <img src="{{ cat.image.url }}" alt="{{ cat.name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    {% else %}
+                        <i class="fa-solid fa-om text-7xl text-gold-500/20"></i>
+                    {% endif %}
+                </div>
+                <div class="p-6 flex flex-col flex-grow text-center">
+                    <h2 class="heading-serif font-bold text-bronze-900 text-xl group-hover:text-saffron-500 transition-colors mb-2">{{ cat.name }}</h2>
+                    <p class="text-sm text-bronze-900/70 mb-6 leading-relaxed">
+                        {{ cat.description|default:"Beautiful handcrafted items designed to elevate your style and celebrations." }}
+                    </p>
+                    <a href="{% url 'shop' %}?category={{ cat.slug }}" class="mt-auto bg-beige-100 hover:bg-saffron-500 hover:text-white text-bronze-900 font-bold py-2.5 rounded-lg transition-colors text-sm">
+                        View Collection
+                    </a>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-span-full text-center text-bronze-900/60 py-12">
+                No categories found.
+            </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Order Success - Kala Mandir{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto px-4 py-16 text-center space-y-6">
+    <div class="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mx-auto border border-green-200 shadow-sm text-green-500 text-4xl">
+        <i class="fa-solid fa-circle-check"></i>
+    </div>
+    
+    <h1 class="heading-serif text-4xl font-bold text-bronze-900">Thank You For Your Patronage!</h1>
+    <p class="text-sm text-bronze-900/70 leading-relaxed max-w-md mx-auto">
+        Your order has been placed successfully. A confirmation email with receipt details has been sent to <span class="font-semibold text-bronze-900">{{ order.email }}</span>.
+    </p>
+
+    <!-- Details Box -->
+    <div class="bg-white p-8 rounded-2xl border border-gold-500/10 shadow-sm space-y-4 max-w-md mx-auto text-left text-sm">
+        <div class="flex justify-between">
+            <span class="text-bronze-900/60">Order Number</span>
+            <span class="font-bold text-bronze-900">#{{ order.id }}</span>
+        </div>
+        <div class="flex justify-between">
+            <span class="text-bronze-900/60">Tracking ID</span>
+            <span class="font-semibold text-saffron-500">{{ order.tracking_number }}</span>
+        </div>
+        <div class="flex justify-between">
+            <span class="text-bronze-900/60">Total Paid (COD)</span>
+            <span class="font-bold text-bronze-900">₹{{ order.total_amount }}</span>
+        </div>
+    </div>
+
+    <div class="pt-6 flex flex-col sm:flex-row justify-center gap-4">
+        <a href="{% url 'download_invoice' order.id %}" class="bg-bronze-900 hover:bg-bronze-950 text-gold-100 px-6 py-3 rounded-full font-bold shadow-md transition-colors text-sm">
+            <i class="fa-solid fa-download mr-2"></i> Download Invoice
+        </a>
+        <a href="{% url 'shop' %}" class="bg-saffron-500 hover:bg-saffron-600 text-white px-6 py-3 rounded-full font-bold shadow-md transition-colors text-sm">
+            Continue Shopping
+        </a>
+    </div>
+</div>
+{% endblock %}

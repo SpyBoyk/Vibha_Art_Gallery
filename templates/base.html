@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Handcrafted Mall - Premium Handcrafted Collection{% endblock %}</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        saffron: {
+                            50: '#F5F3FF',
+                            100: '#EDE9FE',
+                            500: '#7C3AED',
+                            600: '#6D28D9',
+                            700: '#5B21B6',
+                        },
+                        gold: {
+                            100: '#fef9c3',
+                            500: '#D4AF37',
+                            600: '#B89020',
+                        },
+                        bronze: {
+                            900: '#1e1b4b',
+                            950: '#0f0e26',
+                        },
+                        beige: {
+                            50: '#FAFAFA',
+                            100: '#F5F5F5',
+                            200: '#E5E5E5',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Cinzel', 'serif'],
+                        sans: ['Outfit', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- AOS Scroll Animations CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #FAFAFA;
+            color: #1e1b4b;
+        }
+        .heading-serif {
+            font-family: 'Cinzel', serif;
+        }
+        /* Glassmorphism details */
+        .glass-nav {
+            background: rgba(250, 250, 250, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(124, 58, 237, 0.15);
+        }
+    </style>
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="flex flex-col min-h-screen pb-20 md:pb-0">
+
+    <!-- Top Announcement Bar -->
+    <div class="bg-bronze-900 text-gold-100 text-xs py-2 px-4 text-center font-medium tracking-wider uppercase border-b border-gold-500/20">
+        ✨ Traditional Indian Crafts & Ganesh Festival Decor - Free Shipping on Orders Above ₹1,999! ✨
+    </div>
+
+    <!-- Header / Navbar -->
+    <header class="sticky top-0 z-40 glass-nav shadow-sm transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0">
+                    <a href="{% url 'home' %}" class="flex flex-col">
+                        <span class="heading-serif text-2xl font-bold tracking-widest text-saffron-500">VIBHA ART GALLERY</span>
+                        <span class="text-[9px] uppercase tracking-[0.25em] text-gold-600 font-semibold -mt-1">Handcrafted Luxury</span>
+                    </a>
+                </div>
+
+                <!-- Navigation Links -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="{% url 'home' %}" class="text-bronze-900 hover:text-saffron-500 font-medium transition-colors">Home</a>
+                    <a href="{% url 'shop' %}" class="text-bronze-900 hover:text-saffron-500 font-medium transition-colors">Shop</a>
+                    <a href="{% url 'categories' %}" class="text-bronze-900 hover:text-saffron-500 font-medium transition-colors">Categories</a>
+                    <a href="{% url 'blog_list' %}" class="text-bronze-900 hover:text-saffron-500 font-medium transition-colors">Our Story</a>
+                    <a href="{% url 'contact' %}" class="text-bronze-900 hover:text-saffron-500 font-medium transition-colors">Contact</a>
+                </nav>
+
+                <!-- Search & Actions -->
+                <div class="flex items-center space-x-6">
+                    <form action="{% url 'shop' %}" method="GET" class="hidden lg:flex items-center relative">
+                        <input type="text" name="q" placeholder="Search crafts..." value="{{ query|default:'' }}" class="bg-beige-100/80 border border-gold-500/20 rounded-full px-4 py-1.5 pr-10 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 w-60">
+                        <button type="submit" class="absolute right-3 text-bronze-900/60 hover:text-saffron-500">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </form>
+
+                    <!-- User Actions -->
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'profile' %}" class="text-bronze-900 hover:text-saffron-500 transition-colors" title="My Profile">
+                            <i class="fa-regular fa-user text-xl"></i>
+                        </a>
+                        <a href="{% url 'logout' %}" class="text-bronze-900 hover:text-red-600 transition-colors" title="Logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <i class="fa-solid fa-arrow-right-from-bracket text-xl"></i>
+                        </a>
+                        <form id="logout-form" action="{% url 'logout' %}" method="POST" class="hidden">
+                            {% csrf_token %}
+                        </form>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="text-bronze-900 hover:text-saffron-500 transition-colors" title="Login">
+                            <i class="fa-regular fa-user text-xl"></i>
+                        </a>
+                    {% endif %}
+
+                    <!-- Cart (Floating/Navbar icon) -->
+                    <a href="{% url 'cart_detail' %}" class="relative text-bronze-900 hover:text-saffron-500 transition-colors">
+                        <i class="fa-solid fa-bag-shopping text-xl"></i>
+                        {% if cart|length > 0 %}
+                            <span class="absolute -top-2 -right-2 bg-saffron-500 text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold animate-pulse">{{ cart|length }}</span>
+                        {% endif %}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Message Alerts -->
+    {% if messages %}
+        <div class="max-w-7xl mx-auto px-4 mt-4">
+            {% for message in messages %}
+                <div class="flex items-center p-4 mb-2 text-sm border rounded-lg {% if message.tags == 'success' %}bg-green-50 border-green-200 text-green-800{% else %}bg-amber-50 border-amber-200 text-amber-800{% endif %}" role="alert">
+                    <i class="fa-solid {% if message.tags == 'success' %}fa-circle-check{% else %}fa-circle-exclamation{% endif %} mr-2 text-lg"></i>
+                    <div>
+                        {{ message }}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <!-- Main Content Area -->
+    <main class="flex-grow">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-bronze-900 text-beige-100 mt-auto border-t-2 border-gold-500">
+        <div class="max-w-7xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Col 1: About & Info -->
+                <div>
+                    <span class="heading-serif text-2xl font-bold tracking-widest text-gold-500">VIBHA ART GALLERY</span>
+                    <p class="mt-4 text-sm text-beige-100/70 leading-relaxed">
+                        Curating beautiful, authentic, and premium handcrafted items, Ganpati idols, and traditional Indian home decorations. Every purchase supports indigenous rural artisans.
+                    </p>
+                    <div class="flex space-x-4 mt-6">
+                        <a href="#" class="text-beige-100/60 hover:text-gold-500 transition-colors"><i class="fa-brands fa-instagram text-xl"></i></a>
+                        <a href="#" class="text-beige-100/60 hover:text-gold-500 transition-colors"><i class="fa-brands fa-facebook text-xl"></i></a>
+                        <a href="#" class="text-beige-100/60 hover:text-gold-500 transition-colors"><i class="fa-brands fa-pinterest text-xl"></i></a>
+                        <a href="https://wa.me/919999999999" class="text-green-500 hover:text-green-400 transition-colors" target="_blank"><i class="fa-brands fa-whatsapp text-xl"></i></a>
+                    </div>
+                </div>
+
+                <!-- Col 2: Quick Links -->
+                <div>
+                    <h3 class="heading-serif text-gold-500 font-semibold tracking-wider text-sm uppercase mb-4">Shop Collections</h3>
+                    <ul class="space-y-2 text-sm text-beige-100/70">
+                        <li><a href="{% url 'shop' %}?category=ganpati-idols" class="hover:text-gold-500 transition-colors">Ganpati Idols</a></li>
+                        <li><a href="{% url 'shop' %}?category=handmade-jewellery" class="hover:text-gold-500 transition-colors">Handmade Jewellery</a></li>
+                        <li><a href="{% url 'shop' %}?category=pooja-accessories" class="hover:text-gold-500 transition-colors">Pooja Accessories</a></li>
+                        <li><a href="{% url 'shop' %}" class="hover:text-gold-500 transition-colors">View All Products</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 3: Customer Care -->
+                <div>
+                    <h3 class="heading-serif text-gold-500 font-semibold tracking-wider text-sm uppercase mb-4">Customer Care</h3>
+                    <ul class="space-y-2 text-sm text-beige-100/70">
+                        <li><a href="{% url 'about' %}" class="hover:text-gold-500 transition-colors">Our Story</a></li>
+                        <li><a href="{% url 'contact' %}" class="hover:text-gold-500 transition-colors">Contact Us</a></li>
+                        <li><a href="{% url 'faq' %}" class="hover:text-gold-500 transition-colors">FAQs</a></li>
+                        <li><a href="{% url 'privacy' %}" class="hover:text-gold-500 transition-colors">Privacy Policy</a></li>
+                        <li><a href="{% url 'terms' %}" class="hover:text-gold-500 transition-colors">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 4: Newsletter -->
+                <div>
+                    <h3 class="heading-serif text-gold-500 font-semibold tracking-wider text-sm uppercase mb-4">Join Our Inner Circle</h3>
+                    <p class="text-sm text-beige-100/70 mb-4 leading-relaxed">
+                        Subscribe to receive launch updates, seasonal discounts, and handcrafted folklore.
+                    </p>
+                    <form action="{% url 'newsletter_subscribe' %}" method="POST" class="flex">
+                        {% csrf_token %}
+                        <input type="email" name="email" placeholder="Your email address" required class="bg-bronze-950 border border-gold-500/20 text-beige-100 text-sm px-4 py-2 rounded-l-lg focus:outline-none focus:ring-1 focus:ring-gold-500 w-full">
+                        <button type="submit" class="bg-gold-500 hover:bg-gold-600 text-bronze-900 px-4 py-2 rounded-r-lg font-semibold text-sm transition-colors">
+                            Subscribe
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="mt-12 pt-8 border-t border-beige-100/10 text-center text-xs text-beige-100/50">
+                <p>&copy; 2026 Vibha Art Gallery. All rights reserved. Designed for Handcrafted Splendor.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile Bottom Navigation Bar -->
+    <div class="md:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-purple-100 z-50 px-6 py-3 shadow-[0_-4px_20px_rgba(124,58,237,0.08)] flex justify-between items-center">
+        <a href="{% url 'home' %}" class="flex flex-col items-center gap-1 text-bronze-900/60 hover:text-saffron-500 transition-colors">
+            <i class="fa-solid fa-house text-lg"></i>
+            <span class="text-[9px] uppercase tracking-wider font-semibold">Home</span>
+        </a>
+        <a href="{% url 'shop' %}" class="flex flex-col items-center gap-1 text-bronze-900/60 hover:text-saffron-500 transition-colors">
+            <i class="fa-solid fa-magnifying-glass text-lg"></i>
+            <span class="text-[9px] uppercase tracking-wider font-semibold">Shop</span>
+        </a>
+        <a href="{% url 'categories' %}" class="flex flex-col items-center gap-1 text-bronze-900/60 hover:text-saffron-500 transition-colors">
+            <i class="fa-solid fa-grip text-lg"></i>
+            <span class="text-[9px] uppercase tracking-wider font-semibold">Categories</span>
+        </a>
+        <a href="{% url 'cart_detail' %}" class="flex flex-col items-center gap-1 text-bronze-900/60 hover:text-saffron-500 transition-colors relative">
+            <i class="fa-solid fa-bag-shopping text-lg"></i>
+            {% if cart|length > 0 %}
+                <span class="absolute -top-1 -right-1 bg-saffron-500 text-white text-[8px] w-4 h-4 rounded-full flex items-center justify-center font-bold">{{ cart|length }}</span>
+            {% endif %}
+            <span class="text-[9px] uppercase tracking-wider font-semibold">Bag</span>
+        </a>
+        <a href="{% url 'profile' %}" class="flex flex-col items-center gap-1 text-bronze-900/60 hover:text-saffron-500 transition-colors">
+            <i class="fa-regular fa-user text-lg"></i>
+            <span class="text-[9px] uppercase tracking-wider font-semibold">Profile</span>
+        </a>
+    </div>
+
+    <!-- AOS Scroll Animations JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 100
+        });
+    </script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
