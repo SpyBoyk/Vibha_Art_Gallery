@@ -1,248 +1,167 @@
 {% extends 'base.html' %}
+{% load static %}
 
-{% block title %}Vibha Art Gallery - Handcrafted Elegance, Ganpati Idols & Pooja Accessories{% endblock %}
+{% block title %}Vibha Art Galleries - Premium Jewellery Display Solutions{% endblock %}
 
 {% block content %}
 <!-- Hero Section -->
-<section class="relative bg-gradient-to-tr from-purple-50 via-beige-50/30 to-indigo-50/20 overflow-hidden py-24 md:py-36 border-b border-gold-500/10">
-    <!-- Glowing background blobs -->
-    <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-300/20 rounded-full blur-3xl -translate-y-1/2 -translate-x-1/2"></div>
-    <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gold-100/30 rounded-full blur-3xl translate-y-1/2 translate-x-1/2"></div>
+<section class="relative bg-gradient-to-tr from-teal-50/50 via-white to-amber-50/30 pt-24 pb-12 sm:pt-32 sm:pb-16 overflow-hidden border-b border-teal-50">
+    <!-- Ambient blurred background elements -->
+    <div class="absolute top-0 left-1/4 w-96 h-96 bg-teal-100/40 rounded-full blur-3xl -translate-y-1/2 -translate-x-1/2"></div>
+    <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-amber-100/30 rounded-full blur-3xl translate-y-1/2 translate-x-1/2"></div>
     
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col lg:flex-row items-center justify-between gap-12">
-        <div class="lg:w-1/2 space-y-6 text-center lg:text-left" data-aos="fade-right">
-            <span class="text-saffron-500 font-bold uppercase tracking-widest text-xs sm:text-sm flex items-center justify-center lg:justify-start">
-                <span class="w-8 h-[2px] bg-saffron-500 mr-3 rounded-full"></span> Artisan & Handcrafted Luxuries
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col lg:flex-row items-center justify-between gap-16">
+        <div class="lg:w-1/2 space-y-8 text-center lg:text-left" data-aos="fade-right">
+            <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-teal-50 border border-teal-100/50 text-teal-700 font-bold uppercase tracking-widest text-xs">
+                <i class="fa-solid fa-gem text-amber-500"></i> Premium Quality Since 2020
             </span>
-            <h1 class="heading-serif text-3xl sm:text-5xl font-bold tracking-tight text-bronze-900 leading-tight">
-                Embrace the Grace of <span class="text-transparent bg-clip-text bg-gradient-to-r from-saffron-500 to-purple-600">Divine Crafts</span>
+            <h1 class="font-serif text-4xl sm:text-6xl font-bold tracking-tight text-slate-900 leading-tight">
+                Crafting Elegance for <span class="text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-amber-500">Your Showroom</span>
             </h1>
-            <p class="text-base sm:text-lg text-bronze-900/70 max-w-xl mx-auto lg:mx-0 leading-relaxed">
-                Discover a curated selection of eco-friendly Ganpati idols, exquisite festival decorations, pooja accessories, and handcrafted traditional jewelry.
+            <p class="text-base sm:text-lg text-slate-600 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+                Vibha Art Galleries (VAG) is a trusted manufacturer and trader specializing in elegant jewelry display stands, metal stand busts, premium suede trays, and custom packaging.
             </p>
             <div class="pt-4 flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
-                <a href="{% url 'shop' %}" class="bg-gradient-to-r from-saffron-500 to-purple-600 hover:from-saffron-600 hover:to-purple-700 text-white px-10 py-4 rounded-full font-bold shadow-lg shadow-purple-500/20 hover:shadow-xl hover:shadow-purple-500/30 transition-all text-center tracking-wider text-sm uppercase">
-                    Explore Shop
+                <a href="{% url 'shop' %}" class="bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white px-10 py-4 rounded-full font-bold shadow-lg shadow-teal-700/20 transition-all text-center tracking-wider text-sm uppercase">
+                    Explore Catalog
                 </a>
-                <a href="{% url 'shop' %}?category=ganpati-idols" class="backdrop-blur-sm bg-white/40 border border-gold-500/40 text-bronze-900 hover:bg-gold-500/10 px-10 py-4 rounded-full font-bold transition-all text-center tracking-wider text-sm uppercase">
-                    Ganpati Collection
+                <a href="{% url 'shop' %}?category=section-e-premium-combo-sets" class="backdrop-blur-sm bg-white/60 border border-amber-500/40 text-teal-900 hover:bg-amber-500/10 px-10 py-4 rounded-full font-bold transition-all text-center tracking-wider text-sm uppercase">
+                    Showroom Combos
                 </a>
             </div>
         </div>
         
+        <!-- Hero Right: Interactive 3D Card Stack -->
         <div class="lg:w-1/2 flex justify-center relative" data-aos="fade-left">
-            <!-- Simulated Premium Product Image -->
-            <div class="relative w-80 h-96 sm:w-[420px] sm:h-[500px] bg-white/80 backdrop-blur-md p-6 rounded-[2.5rem] shadow-[0_20px_50px_rgba(124,58,237,0.12)] border border-white/60 hover:shadow-[0_20px_50px_rgba(124,58,237,0.22)] transition-shadow duration-500">
-                <div class="absolute -top-4 -left-4 bg-gradient-to-r from-gold-500 to-amber-500 text-bronze-950 text-xs font-bold px-5 py-2.5 rounded-full shadow-lg transform -rotate-6">
-                    Artisan Special ✨
+            <div class="relative w-80 h-96 sm:w-[440px] sm:h-[500px] bg-white p-6 rounded-[2.5rem] shadow-[0_20px_50px_rgba(13,148,136,0.08)] border border-teal-50 hover:shadow-[0_20px_50px_rgba(13,148,136,0.15)] transition-shadow duration-500">
+                <div class="absolute -top-4 -left-4 bg-gradient-to-r from-amber-500 to-amber-600 text-white text-xs font-bold px-5 py-2.5 rounded-full shadow-lg transform -rotate-6 z-20">
+                    Master Catalog 2026 ✨
                 </div>
-                <!-- Abstract beautiful placeholder using SVG pattern or clean style -->
-                <div class="w-full h-full bg-gradient-to-tr from-purple-50 to-amber-50/50 rounded-[2rem] flex flex-col items-center justify-center border border-purple-100/50 overflow-hidden relative">
-                    <div class="absolute inset-0 bg-[radial-gradient(#7C3AED_1px,transparent_1px)] [background-size:24px_24px] opacity-10"></div>
-                    <i class="fa-solid fa-om text-9xl text-saffron-500/20 animate-pulse"></i>
-                    <span class="heading-serif text-2xl font-bold text-bronze-900 mt-6 tracking-wide">Clay Ganesha</span>
-                    <span class="text-xs text-gold-600 font-bold tracking-[0.2em] uppercase mt-2">100% Shadu Clay</span>
+                
+                <div class="w-full h-full bg-gradient-to-tr from-teal-50/50 to-amber-50/30 rounded-[2rem] flex flex-col items-center justify-center border border-teal-100/30 overflow-hidden relative">
+                    <div class="absolute inset-0 bg-[radial-gradient(#0d9488_1px,transparent_1px)] [background-size:24px_24px] opacity-10"></div>
+                    <i class="fa-solid fa-gem text-9xl text-teal-600/20 animate-pulse"></i>
+                    <span class="font-serif text-2xl font-bold text-slate-800 mt-6 tracking-wide">Showroom Sets</span>
+                    <span class="text-xs text-amber-600 font-bold tracking-[0.2em] uppercase mt-2">Section E & F Collection</span>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Categories section -->
-<section class="py-24 lg:py-28 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" data-aos="fade-up">
-    <div class="text-center space-y-2 mb-12">
-        <h2 class="heading-serif text-3xl font-bold text-bronze-900">Browse Categories</h2>
-        <div class="h-[2px] w-20 bg-gold-500 mx-auto"></div>
+<!-- Categories section (Sections A to F) -->
+<section class="pt-10 pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" data-aos="fade-up">
+    <div class="text-center space-y-3 mb-16">
+        <span class="text-teal-600 font-bold tracking-widest text-xs uppercase">Curated Catalog</span>
+        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-slate-900">Browse Catalog Sections</h2>
+        <div class="h-[2px] w-20 bg-amber-500 mx-auto rounded-full"></div>
     </div>
     
-    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 justify-center">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {% for cat in categories %}
-            <a href="{% url 'shop' %}?category={{ cat.slug }}" class="group bg-white p-6 rounded-2xl border border-gold-500/10 text-center shadow-sm hover:shadow-md hover:border-saffron-500/30 transition-all">
-                <div class="w-16 h-16 bg-beige-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-saffron-500/10 transition-colors">
-                    {% if cat.slug == 'ganpati-idols' or cat.slug == 'eco-friendly-ganpati' %}
-                        <i class="fa-solid fa-om text-2xl text-saffron-500"></i>
-                    {% elif cat.slug == 'handmade-jewellery' or cat.slug == 'earrings' %}
-                        <i class="fa-solid fa-gem text-2xl text-gold-500"></i>
+            <a href="{% url 'shop' %}?category={{ cat.slug }}" class="group bg-white rounded-3xl border border-teal-50/80 overflow-hidden shadow-sm hover:shadow-xl hover:border-teal-500/20 transition-all duration-300 flex flex-col">
+                <div class="aspect-video w-full overflow-hidden bg-slate-100 relative">
+                    {% if cat.image %}
+                        <img src="{{ cat.image.url }}" alt="{{ cat.name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     {% else %}
-                        <i class="fa-solid fa-gifts text-2xl text-amber-600"></i>
+                        <div class="w-full h-full flex items-center justify-center bg-teal-50">
+                            <i class="fa-solid fa-images text-teal-300 text-3xl"></i>
+                        </div>
                     {% endif %}
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent"></div>
+                    <div class="absolute bottom-4 left-6">
+                        <span class="text-xs font-bold text-amber-400 uppercase tracking-widest block">Collection</span>
+                        <h3 class="font-serif text-lg font-bold text-white mt-1">{{ cat.name }}</h3>
+                    </div>
                 </div>
-                <h3 class="font-bold text-bronze-900 group-hover:text-saffron-500 transition-colors text-sm sm:text-base">{{ cat.name }}</h3>
+                <div class="p-6 flex-grow flex flex-col justify-between">
+                    <p class="text-xs text-slate-500 leading-relaxed mb-4">{{ cat.description }}</p>
+                    <span class="text-xs font-bold text-teal-600 group-hover:text-teal-700 transition-colors flex items-center gap-1">
+                        View Products <i class="fa-solid fa-arrow-right text-[10px] group-hover:translate-x-1 transition-transform"></i>
+                    </span>
+                </div>
             </a>
-        {% empty %}
-            <div class="col-span-full text-center text-bronze-900/60 py-6">No categories defined yet.</div>
         {% endfor %}
     </div>
 </section>
 
-<!-- Featured Ganpati Collection -->
-<section class="py-16 bg-beige-50 border-y border-gold-500/10" data-aos="fade-up">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center justify-between mb-12">
-            <div>
-                <h2 class="heading-serif text-3xl font-bold text-bronze-900">Featured Creations</h2>
-                <p class="text-sm text-bronze-900/60 mt-1">Our highly appreciated collection of handcrafted creations</p>
+<!-- B2B Wholesale Focus Section -->
+<section class="bg-gradient-to-br from-slate-900 via-teal-950 to-slate-900 text-white py-24 overflow-hidden relative">
+    <div class="absolute inset-0 bg-[radial-gradient(#0d9488_1px,transparent_1px)] [background-size:30px_30px] opacity-10"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col lg:flex-row items-center justify-between gap-16">
+        <div class="lg:w-1/2 space-y-6" data-aos="fade-right">
+            <span class="text-amber-500 font-bold uppercase tracking-widest text-xs">Partner with Vibha</span>
+            <h2 class="font-serif text-3xl sm:text-5xl font-bold">Showroom Packaging & Display Specialists</h2>
+            <p class="text-slate-300 text-sm leading-relaxed max-w-xl">
+                We custom-emboss your brand logos on display busts, suede trays, and jewelry pouches. Our design studio collaborates directly with retailers and wholesalers to manufacture bespoke sizing.
+            </p>
+            <div class="pt-4">
+                <a href="{% url 'contact' %}" class="bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold px-8 py-3.5 rounded-full shadow-lg transition-colors inline-block tracking-wider text-xs uppercase">
+                    Inquire For Bulk Orders
+                </a>
             </div>
-            <a href="{% url 'shop' %}" class="text-saffron-500 hover:text-saffron-600 text-sm font-semibold flex items-center">
-                View All <i class="fa-solid fa-chevron-right text-xs ml-1"></i>
-            </a>
         </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-            {% for prod in featured_products %}
-                <div class="bg-white rounded-2xl overflow-hidden border border-gold-500/10 shadow-sm hover:shadow-xl transition-all group flex flex-col h-full">
-                    <div class="relative overflow-hidden bg-beige-100 h-64 flex items-center justify-center">
-                        {% if prod.images.first %}
-                            <img src="{{ prod.images.first.image.url }}" alt="{{ prod.name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                        {% else %}
-                            <i class="fa-solid fa-gifts text-5xl text-gold-500/30"></i>
-                        {% endif %}
-                        {% if prod.has_discount %}
-                            <span class="absolute top-4 left-4 bg-saffron-500 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
-                                {{ prod.get_discount_percentage }}% Off
-                            </span>
-                        {% endif %}
-                        <form action="{% url 'cart_add' prod.id %}" method="POST" class="absolute bottom-4 right-4 translate-y-12 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-                            {% csrf_token %}
-                            <button type="submit" class="bg-white hover:bg-saffron-500 hover:text-white text-bronze-900 w-10 h-10 rounded-full flex items-center justify-center shadow-lg transition-colors">
-                                <i class="fa-solid fa-shopping-cart text-sm"></i>
-                            </button>
-                        </form>
-                    </div>
-                    <div class="p-6 flex flex-col flex-grow">
-                        <span class="text-xs text-gold-600 font-semibold uppercase tracking-wider mb-1">{{ prod.category.name }}</span>
-                        <h3 class="font-bold text-bronze-900 text-lg hover:text-saffron-500 transition-colors mb-2">
-                            <a href="{% url 'product_detail' prod.slug %}">{{ prod.name }}</a>
-                        </h3>
-                        <div class="flex items-center space-x-1 mb-4 text-xs text-gold-500">
-                            <i class="fa-solid fa-star"></i>
-                            <span class="font-semibold text-bronze-900">{{ prod.average_rating }}</span>
-                            <span class="text-bronze-900/40">({{ prod.review_count }})</span>
-                        </div>
-                        <div class="mt-auto flex items-center justify-between">
-                            <div>
-                                {% if prod.has_discount %}
-                                    <span class="text-lg font-bold text-saffron-500">₹{{ prod.discount_price }}</span>
-                                    <span class="text-sm text-bronze-900/40 line-through ml-2">₹{{ prod.price }}</span>
-                                {% else %}
-                                    <span class="text-lg font-bold text-bronze-900">₹{{ prod.price }}</span>
-                                {% endif %}
-                            </div>
-                            <a href="{% url 'product_detail' prod.slug %}" class="text-xs font-bold text-bronze-900 hover:text-saffron-500 uppercase tracking-widest">Detail</a>
-                        </div>
-                    </div>
-                </div>
-            {% empty %}
-                <div class="col-span-full text-center text-bronze-900/60 py-12">
-                    No featured products found. Add products in admin to showcase here!
-                </div>
-            {% endfor %}
+        <div class="lg:w-1/2 grid grid-cols-1 sm:grid-cols-2 gap-6" data-aos="fade-left">
+            <div class="bg-white/5 border border-white/10 p-6 rounded-2xl">
+                <i class="fa-solid fa-paint-roller text-amber-500 text-3xl mb-4"></i>
+                <h4 class="font-serif font-bold text-lg mb-2">Anti-Tarnish Suede</h4>
+                <p class="text-xs text-slate-400 leading-relaxed">Our proprietary fabrics ensure diamond & gold products remain pristine on counters.</p>
+            </div>
+            <div class="bg-white/5 border border-white/10 p-6 rounded-2xl">
+                <i class="fa-solid fa-arrows-spin text-amber-500 text-3xl mb-4"></i>
+                <h4 class="font-serif font-bold text-lg mb-2">Height Adjustable</h4>
+                <p class="text-xs text-slate-400 leading-relaxed">Adjustable steel rods to adapt displays perfectly to counter shelf heights.</p>
+            </div>
         </div>
     </div>
 </section>
 
-<!-- Why Choose Us -->
-<section class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" data-aos="fade-up">
-    <div class="text-center space-y-2 mb-12">
-        <h2 class="heading-serif text-3xl font-bold text-bronze-900">Why Vibha Art Gallery</h2>
-        <div class="h-[2px] w-20 bg-gold-500 mx-auto"></div>
+<!-- Trending/Featured Catalog Section -->
+<section class="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" data-aos="fade-up">
+    <div class="text-center space-y-3 mb-16">
+        <span class="text-teal-600 font-bold tracking-widest text-xs uppercase">Premium Showcase</span>
+        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-slate-900">Featured Display Solutions</h2>
+        <div class="h-[2px] w-20 bg-amber-500 mx-auto rounded-full"></div>
     </div>
     
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div class="bg-white p-8 rounded-2xl border border-gold-500/10 text-center space-y-3 shadow-sm">
-            <div class="w-14 h-14 bg-saffron-50 rounded-full flex items-center justify-center mx-auto text-saffron-500 text-2xl">
-                <i class="fa-solid fa-hands-holding"></i>
-            </div>
-            <h3 class="heading-serif text-lg font-bold text-bronze-900">Support Rural Artisans</h3>
-            <p class="text-sm text-bronze-900/70">Each product is handmade by local rural artisans keeping traditional Indian art alive.</p>
-        </div>
-        
-        <div class="bg-white p-8 rounded-2xl border border-gold-500/10 text-center space-y-3 shadow-sm">
-            <div class="w-14 h-14 bg-gold-100/30 rounded-full flex items-center justify-center mx-auto text-gold-500 text-2xl">
-                <i class="fa-solid fa-leaf"></i>
-            </div>
-            <h3 class="heading-serif text-lg font-bold text-bronze-900">100% Eco-Friendly</h3>
-            <p class="text-sm text-bronze-900/70">Our Ganpati idols are crafted from shadu clay that dissolves completely in water.</p>
-        </div>
-        
-        <div class="bg-white p-8 rounded-2xl border border-gold-500/10 text-center space-y-3 shadow-sm">
-            <div class="w-14 h-14 bg-amber-50 rounded-full flex items-center justify-center mx-auto text-amber-600 text-2xl">
-                <i class="fa-solid fa-award"></i>
-            </div>
-            <h3 class="heading-serif text-lg font-bold text-bronze-900">Exquisite Quality</h3>
-            <p class="text-sm text-bronze-900/70">Premium raw materials and meticulous care guarantee the most beautiful designs.</p>
-        </div>
-    </div>
-</section>
-
-<!-- Review / Testimonials Section -->
-<section class="py-16 bg-beige-100 border-t border-gold-500/10" data-aos="fade-up">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center space-y-2 mb-12">
-            <h2 class="heading-serif text-3xl font-bold text-bronze-900">Artisan Admirers</h2>
-            <p class="text-sm text-bronze-900/60">What our patrons say about Vibha Art Gallery creations</p>
-            <div class="h-[2px] w-20 bg-gold-500 mx-auto"></div>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {% for rev in reviews %}
-                <div class="bg-white p-8 rounded-2xl border border-gold-500/10 shadow-sm space-y-4">
-                    <div class="flex items-center space-x-1 text-gold-500 text-sm">
-                        {% for i in "12345" %}
-                            <i class="fa-solid fa-star"></i>
-                        {% endfor %}
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        {% for product in featured_products %}
+            <div class="group bg-white rounded-3xl border border-teal-50/50 p-4 shadow-sm hover:shadow-md transition-shadow relative flex flex-col justify-between">
+                <div>
+                    <!-- Badge -->
+                    <span class="absolute top-6 left-6 z-10 bg-teal-600 text-white text-[10px] font-bold px-3 py-1.5 rounded-full uppercase tracking-wider shadow">
+                        VAG Elite
+                    </span>
+                    <!-- Image -->
+                    <div class="aspect-square w-full rounded-2xl overflow-hidden bg-slate-50 relative mb-4">
+                        {% if product.images.exists %}
+                            <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        {% endif %}
+                        <a href="{% url 'product_detail' product.id %}" class="absolute inset-0 bg-slate-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                            <span class="bg-white text-slate-900 font-bold text-xs px-6 py-2.5 rounded-full shadow-lg">View Details</span>
+                        </a>
                     </div>
-                    <p class="text-sm text-bronze-900/80 italic leading-relaxed">
-                        "{{ rev.content }}"
-                    </p>
-                    <div class="flex items-center space-x-3 pt-2">
-                        <div class="w-10 h-10 rounded-full bg-saffron-100 text-saffron-500 flex items-center justify-center font-bold">
-                            {{ rev.user.username|slice:":1"|upper }}
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-sm text-bronze-900">{{ rev.user.username }}</h4>
-                            <span class="text-xs text-bronze-900/40">Verified Patron</span>
-                        </div>
-                    </div>
-                </div>
-            {% empty %}
-                <div class="col-span-full text-center text-bronze-900/60 py-6">No testimonials available yet.</div>
-            {% endfor %}
-        </div>
-    </div>
-</section>
-
-<!-- Blog / Story Section -->
-<section class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" data-aos="fade-up">
-    <div class="text-center space-y-2 mb-12">
-        <h2 class="heading-serif text-3xl font-bold text-bronze-900">Craft Folklore</h2>
-        <p class="text-sm text-bronze-900/60">Learn about our traditions, art, and festival guides</p>
-        <div class="h-[2px] w-20 bg-gold-500 mx-auto"></div>
-    </div>
-    
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {% for blog in blogs %}
-            <div class="bg-white rounded-2xl overflow-hidden border border-gold-500/10 shadow-sm hover:shadow-md transition-all flex flex-col h-full">
-                <div class="h-48 bg-beige-100 relative flex items-center justify-center border-b border-gold-500/10">
-                    {% if blog.image %}
-                        <img src="{{ blog.image.url }}" alt="{{ blog.title }}" class="w-full h-full object-cover">
-                    {% else %}
-                        <i class="fa-solid fa-om text-5xl text-gold-500/20"></i>
-                    {% endif %}
-                </div>
-                <div class="p-6 flex flex-col flex-grow">
-                    <span class="text-xs text-saffron-500 font-semibold mb-2">{{ blog.created_at|date:"d M Y" }}</span>
-                    <h3 class="font-bold text-bronze-900 text-lg hover:text-saffron-500 transition-colors mb-3">
-                        <a href="{% url 'blog_detail' blog.slug %}">{{ blog.title }}</a>
+                    <!-- Brand info -->
+                    <span class="text-[10px] text-amber-600 font-bold uppercase tracking-wider block">{{ product.category.name }}</span>
+                    <!-- Title -->
+                    <h3 class="font-serif text-sm font-bold text-slate-900 mt-1 line-clamp-1">
+                        <a href="{% url 'product_detail' product.id %}" class="hover:text-teal-600 transition-colors">{{ product.name }}</a>
                     </h3>
-                    <p class="text-sm text-bronze-900/70 line-clamp-3 mb-4 leading-relaxed">
-                        {{ blog.content|striptags }}
-                    </p>
-                    <a href="{% url 'blog_detail' blog.slug %}" class="mt-auto text-xs font-bold text-bronze-900 hover:text-saffron-500 uppercase tracking-widest">Read Article</a>
+                </div>
+                <!-- Action Footer -->
+                <div class="mt-4 pt-4 border-t border-slate-50 flex items-center justify-between">
+                    <div>
+                        <span class="text-xs text-slate-400 block">Rate</span>
+                        <span class="text-base font-bold text-slate-900">₹{{ product.price }}</span>
+                    </div>
+                    <form action="{% url 'cart_add' product.id %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="bg-teal-50 hover:bg-teal-100 text-teal-700 w-10 h-10 rounded-full flex items-center justify-center transition-colors">
+                            <i class="fa-solid fa-shopping-bag"></i>
+                        </button>
+                    </form>
                 </div>
             </div>
-        {% empty %}
-            <div class="col-span-full text-center text-bronze-900/60 py-6">No blog stories published yet.</div>
         {% endfor %}
     </div>
 </section>

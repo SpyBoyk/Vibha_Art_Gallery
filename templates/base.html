@@ -16,11 +16,11 @@
                 extend: {
                     colors: {
                         saffron: {
-                            50: '#F5F3FF',
-                            100: '#EDE9FE',
-                            500: '#7C3AED',
-                            600: '#6D28D9',
-                            700: '#5B21B6',
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            500: '#0d9488',
+                            600: '#0f766e',
+                            700: '#115e59',
                         },
                         gold: {
                             100: '#fef9c3',
@@ -68,11 +68,6 @@
     {% block extra_head %}{% endblock %}
 </head>
 <body class="flex flex-col min-h-screen pb-20 md:pb-0">
-
-    <!-- Top Announcement Bar -->
-    <div class="bg-bronze-900 text-gold-100 text-xs py-2 px-4 text-center font-medium tracking-wider uppercase border-b border-gold-500/20">
-        ✨ Traditional Indian Crafts & Ganesh Festival Decor - Free Shipping on Orders Above ₹1,999! ✨
-    </div>
 
     <!-- Header / Navbar -->
     <header class="sticky top-0 z-40 glass-nav shadow-sm transition-all duration-300">
@@ -155,14 +150,14 @@
     <!-- Footer -->
     <footer class="bg-bronze-900 text-beige-100 mt-auto border-t-2 border-gold-500">
         <div class="max-w-7xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-12 text-center md:text-left">
                 <!-- Col 1: About & Info -->
-                <div>
+                <div class="flex flex-col items-center md:items-start">
                     <span class="heading-serif text-2xl font-bold tracking-widest text-gold-500">VIBHA ART GALLERIES</span>
                     <p class="mt-4 text-sm text-beige-100/70 leading-relaxed">
                         A trusted manufacturer and trader specializing in Elegant in craft Packaging materials and Jewelry Display Materials products. Crafted to meet the highest standards.
                     </p>
-                    <div class="flex space-x-4 mt-6">
+                    <div class="flex space-x-4 mt-6 justify-center md:justify-start">
                         <a href="#" class="text-beige-100/60 hover:text-gold-500 transition-colors"><i class="fa-brands fa-instagram text-xl"></i></a>
                         <a href="#" class="text-beige-100/60 hover:text-gold-500 transition-colors"><i class="fa-brands fa-facebook text-xl"></i></a>
                         <a href="#" class="text-beige-100/60 hover:text-gold-500 transition-colors"><i class="fa-brands fa-pinterest text-xl"></i></a>
@@ -174,9 +169,9 @@
                 <div>
                     <h3 class="heading-serif text-gold-500 font-semibold tracking-wider text-sm uppercase mb-4">Shop Collections</h3>
                     <ul class="space-y-2 text-sm text-beige-100/70">
-                        <li><a href="{% url 'shop' %}?category=metal-stand-busts" class="hover:text-gold-500 transition-colors">Metal Stand Busts</a></li>
-                        <li><a href="{% url 'shop' %}?category=multi-size-busts" class="hover:text-gold-500 transition-colors">Multi-Size Busts</a></li>
-                        <li><a href="{% url 'shop' %}?category=display-stands" class="hover:text-gold-500 transition-colors">Display Stands</a></li>
+                        <li><a href="{% url 'shop' %}?category=section-a-premium-metal-stand-busts" class="hover:text-gold-500 transition-colors">Metal Stand Busts</a></li>
+                        <li><a href="{% url 'shop' %}?category=section-b-multi-size-bust-collection" class="hover:text-gold-500 transition-colors">Multi-Size Busts</a></li>
+                        <li><a href="{% url 'shop' %}?category=section-c-metal-pu-display-stands" class="hover:text-gold-500 transition-colors">Display Stands</a></li>
                         <li><a href="{% url 'shop' %}" class="hover:text-gold-500 transition-colors">View All Products</a></li>
                     </ul>
                 </div>
@@ -199,7 +194,7 @@
                     <p class="text-sm text-beige-100/70 mb-4 leading-relaxed">
                         Subscribe to receive launch updates, seasonal discounts, and handcrafted folklore.
                     </p>
-                    <form action="{% url 'newsletter_subscribe' %}" method="POST" class="flex">
+                    <form action="{% url 'newsletter_subscribe' %}" method="POST" class="flex max-w-xs mx-auto md:mx-0">
                         {% csrf_token %}
                         <input type="email" name="email" placeholder="Your email address" required class="bg-bronze-950 border border-gold-500/20 text-beige-100 text-sm px-4 py-2 rounded-l-lg focus:outline-none focus:ring-1 focus:ring-gold-500 w-full">
                         <button type="submit" class="bg-gold-500 hover:bg-gold-600 text-bronze-900 px-4 py-2 rounded-r-lg font-semibold text-sm transition-colors">
@@ -241,6 +236,64 @@
             <span class="text-[9px] uppercase tracking-wider font-semibold">Profile</span>
         </a>
     </div>
+
+    <!-- Floating Chatbot Alert Bubble -->
+    <div id="chat-alert" class="fixed bottom-24 right-6 z-50 w-80 bg-white border border-teal-100 rounded-2xl p-4 shadow-[0_10px_30px_rgba(13,148,136,0.12)] transition-all duration-500 transform translate-y-0 opacity-100">
+        <!-- Initial Message View -->
+        <div id="chat-alert-msg" class="flex items-start gap-3">
+            <div class="w-10 h-10 rounded-full bg-teal-50 flex items-center justify-center text-teal-600 flex-shrink-0 relative">
+                <i class="fa-solid fa-comments text-lg animate-pulse"></i>
+                <span class="absolute top-0 right-0 w-2.5 h-2.5 bg-green-500 rounded-full border-2 border-white"></span>
+            </div>
+            <div class="flex-grow space-y-1">
+                <div class="flex justify-between items-center">
+                    <span class="font-bold text-xs text-slate-800">VAG Concierge</span>
+                    <button onclick="dismissChatAlert()" class="text-slate-400 hover:text-slate-600 text-sm font-bold leading-none">&times;</button>
+                </div>
+                <p class="text-xs text-slate-600 leading-relaxed">
+                    Looking for wholesale custom logo displays? Send us an inquiry!
+                </p>
+                <div class="pt-1.5">
+                    <button onclick="showChatForm()" class="inline-flex items-center gap-1.5 bg-teal-600 hover:bg-teal-700 text-white text-[11px] font-bold px-3 py-1.5 rounded-full transition-colors">
+                        <i class="fa-solid fa-envelope"></i> Send Message
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Inquiry Form View -->
+        <div id="chat-alert-form" class="hidden space-y-3">
+            <div class="flex justify-between items-center pb-2 border-b border-slate-50">
+                <span class="font-bold text-xs text-slate-800">Submit Showroom Inquiry</span>
+                <button onclick="dismissChatAlert()" class="text-slate-400 hover:text-slate-600 text-sm font-bold leading-none">&times;</button>
+            </div>
+            <form method="POST" action="{% url 'contact' %}" class="space-y-2">
+                {% csrf_token %}
+                <input type="text" name="name" placeholder="Your Name" required class="w-full text-xs p-2 border border-slate-200 rounded-lg focus:outline-none focus:border-teal-500 bg-slate-50/50">
+                <input type="email" name="email" placeholder="Your Email" required class="w-full text-xs p-2 border border-slate-200 rounded-lg focus:outline-none focus:border-teal-500 bg-slate-50/50">
+                <textarea name="message" rows="2" placeholder="Describe display/logo requirements..." required class="w-full text-xs p-2 border border-slate-200 rounded-lg focus:outline-none focus:border-teal-500 bg-slate-50/50 resize-none"></textarea>
+                <button type="submit" class="w-full bg-teal-600 hover:bg-teal-700 text-white text-[11px] font-bold py-2 rounded-lg transition-colors">
+                    Send Inquiry
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function dismissChatAlert() {
+            const alertEl = document.getElementById('chat-alert');
+            alertEl.style.opacity = '0';
+            alertEl.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+                alertEl.style.display = 'none';
+            }, 500);
+        }
+
+        function showChatForm() {
+            document.getElementById('chat-alert-msg').classList.add('hidden');
+            document.getElementById('chat-alert-form').classList.remove('hidden');
+        }
+    </script>
 
     <!-- AOS Scroll Animations JS -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
