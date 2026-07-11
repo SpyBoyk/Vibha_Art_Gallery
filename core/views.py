@@ -30,11 +30,19 @@ def home_view(request):
 def about_view(request):
     return render(request, 'core/about.html')
 
+from handcrafted_mall.email_helper import send_submission_email
+
 def contact_view(request):
     if request.method == 'POST':
         form = ContactMessageForm(request.POST)
         if form.is_valid():
-            form.save()
+            instance = form.save()
+            send_submission_email("Contact Inquiry Form Submission", {
+                'Name': instance.name,
+                'Email': instance.email,
+                'Subject': instance.subject,
+                'Message': instance.message,
+            })
             messages.success(request, "Your message has been sent successfully. We will get back to you shortly!")
             return redirect('contact')
     else:
@@ -54,7 +62,10 @@ def newsletter_subscribe(request):
     if request.method == 'POST':
         form = NewsletterForm(request.POST)
         if form.is_valid():
-            form.save()
+            instance = form.save()
+            send_submission_email("Newsletter Subscription", {
+                'Email': instance.email,
+            })
             messages.success(request, "Thank you for subscribing to our newsletter!")
         else:
             messages.error(request, "This email is already subscribed or invalid.")

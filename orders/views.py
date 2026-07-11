@@ -68,6 +68,18 @@ def order_create(request):
                 product.stock = max(0, product.stock - item['quantity'])
                 product.save()
 
+            # Send email notification
+            from handcrafted_mall.email_helper import send_submission_email
+            send_submission_email("New Order Placement Form Submission", {
+                'Order ID': order.id,
+                'Tracking Number': order.tracking_number,
+                'Customer': f"{order.first_name} {order.last_name}",
+                'Email': order.email,
+                'Phone': order.phone,
+                'Address': f"{order.address_line_1}, {order.address_line_2 or ''}, {order.city}, {order.state} - {order.postal_code}",
+                'Total Amount': f"INR {order.total_amount}",
+            })
+
             # Clear cart and coupon session
             cart.clear()
             request.session['coupon_id'] = None

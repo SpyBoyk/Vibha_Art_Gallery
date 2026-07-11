@@ -1,41 +1,64 @@
 {% extends 'base.html' %}
 
-{% block title %}Our Story & Craft Folklore - Kala Mandir Blog{% endblock %}
+{% block title %}Our Story & Craft Folklore - Vibha Art Gallery{% endblock %}
 
 {% block content %}
-<section class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center space-y-2 mb-12">
-        <span class="text-saffron-500 font-bold tracking-widest text-xs uppercase font-semibold">Craft Folklore</span>
-        <h1 class="heading-serif text-4xl font-bold text-bronze-900">Articles & Insights</h1>
-        <div class="h-[2px] w-20 bg-gold-500 mx-auto"></div>
+<section class="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
+    <!-- Heritage Introduction Banner -->
+    <div class="bg-gradient-to-r from-bronze-950 via-bronze-900 to-bronze-950 text-white rounded-3xl p-8 sm:p-12 mb-16 relative overflow-hidden border border-gold-500/10 shadow-lg text-center max-w-5xl mx-auto">
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-gold-500/10 via-transparent to-transparent opacity-60"></div>
+        <div class="relative z-10 space-y-4">
+            <span class="text-gold-500 font-bold tracking-[0.25em] text-[10px] uppercase block">Preserving Traditional Splendor</span>
+            <h1 class="heading-serif text-3xl sm:text-4xl font-bold text-white">Our Story & Heritage</h1>
+            <div class="h-[1.5px] w-16 bg-gold-500 mx-auto"></div>
+            <p class="text-xs sm:text-sm text-beige-100/80 max-w-2xl mx-auto leading-relaxed font-light">
+                At Vibha Art Galleries, we act as a bridge between age-old traditional craftsmanship and contemporary luxury. Every article tells a story of heritage, painstaking effort by native artisans, and cultural folklore passed down through generations.
+            </p>
+        </div>
     </div>
 
+    <!-- Editorial Listing Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {% for blog in blogs %}
-            <div class="bg-white rounded-2xl overflow-hidden border border-gold-500/10 shadow-sm hover:shadow-xl transition-all flex flex-col h-full group">
-                <div class="h-56 bg-beige-100 relative overflow-hidden flex items-center justify-center border-b border-gold-500/10">
+            <div class="bg-white rounded-2xl overflow-hidden border border-gold-500/10 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col h-full group">
+                <!-- Image Header -->
+                <div class="h-52 bg-slate-50 relative overflow-hidden flex items-center justify-center border-b border-gold-500/5">
                     {% if blog.image %}
-                        <img src="{{ blog.image.url }}" alt="{{ blog.title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <img src="{{ blog.image.url }}" alt="{{ blog.title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" loading="lazy">
                     {% else %}
-                        <i class="fa-solid fa-om text-6xl text-gold-500/20"></i>
+                        <div class="text-gold-500/20 text-5xl">
+                            <i class="fa-solid fa-om"></i>
+                        </div>
                     {% endif %}
+                    <span class="absolute bottom-4 left-4 bg-white/90 backdrop-blur-sm text-bronze-900 text-[9px] font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">
+                        Artisan Lore
+                    </span>
                 </div>
+
+                <!-- Info Body -->
                 <div class="p-6 flex flex-col flex-grow">
-                    <span class="text-xs text-saffron-500 font-bold mb-2">{{ blog.created_at|date:"d M Y" }}</span>
-                    <h2 class="font-bold text-bronze-900 text-lg hover:text-saffron-500 transition-colors mb-3 leading-snug">
+                    <div class="flex items-center gap-1.5 text-[10px] text-saffron-500 font-semibold mb-2">
+                        <i class="fa-regular fa-calendar-check"></i>
+                        <span>{{ blog.created_at|date:"d M Y" }}</span>
+                    </div>
+
+                    <h2 class="font-bold text-bronze-900 text-base group-hover:text-saffron-500 transition-colors mb-3 leading-snug">
                         <a href="{% url 'blog_detail' blog.slug %}">{{ blog.title }}</a>
                     </h2>
-                    <p class="text-sm text-bronze-900/70 line-clamp-3 mb-4 leading-relaxed">
+
+                    <p class="text-xs text-bronze-900/60 line-clamp-3 mb-5 leading-relaxed font-light">
                         {{ blog.content|striptags }}
                     </p>
-                    <a href="{% url 'blog_detail' blog.slug %}" class="mt-auto text-xs font-bold text-bronze-900 hover:text-saffron-500 uppercase tracking-widest flex items-center">
-                        Read Story <i class="fa-solid fa-arrow-right ml-2 text-[10px]"></i>
+
+                    <a href="{% url 'blog_detail' blog.slug %}" class="mt-auto text-[10px] font-bold text-bronze-900 hover:text-saffron-500 uppercase tracking-widest flex items-center gap-1">
+                        Read Full Story <i class="fa-solid fa-chevron-right text-[8px] transition-transform group-hover:translate-x-1"></i>
                     </a>
                 </div>
             </div>
         {% empty %}
-            <div class="col-span-full text-center text-bronze-900/60 py-12">
-                No blog stories published yet. Stay tuned!
+            <div class="col-span-full text-center text-bronze-900/40 py-16">
+                <i class="fa-regular fa-paper-plane text-4xl mb-4 text-gold-500/30 block"></i>
+                <span class="text-xs font-semibold uppercase">No stories published yet. Stay tuned!</span>
             </div>
         {% endfor %}
     </div>

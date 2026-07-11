@@ -1,43 +1,86 @@
 {% extends 'base.html' %}
 
-{% block title %}Frequently Asked Questions - Kala Mandir{% endblock %}
+{% block title %}Frequently Asked Questions - Vibha Art Gallery{% endblock %}
+
+{% block extra_head %}
+<style>
+    /* Accordion hover & expand styling */
+    .faq-accordion details {
+        transition: all 0.3s ease;
+    }
+    .faq-accordion details[open] {
+        border-color: rgba(212, 175, 55, 0.4);
+        box-shadow: 0 4px 15px rgba(212, 175, 55, 0.06);
+    }
+    .faq-accordion summary {
+        list-style: none;
+    }
+    .faq-accordion summary::-webkit-details-marker {
+        display: none;
+    }
+    .faq-accordion details .chevron {
+        transition: transform 0.3s ease;
+    }
+    .faq-accordion details[open] .chevron {
+        transform: rotate(180deg);
+    }
+</style>
+{% endblock %}
 
 {% block content %}
-<section class="py-16 max-w-4xl mx-auto px-4">
+<section class="py-12 max-w-3xl mx-auto px-4">
+    <!-- Header -->
     <div class="text-center space-y-2 mb-12">
         <span class="text-saffron-500 font-bold tracking-widest text-xs uppercase">Need Help?</span>
-        <h1 class="heading-serif text-4xl font-bold text-bronze-900">Frequently Asked Questions</h1>
-        <div class="h-[2px] w-20 bg-gold-500 mx-auto"></div>
+        <h1 class="heading-serif text-3xl sm:text-4xl font-bold text-bronze-900">Frequently Asked Questions</h1>
+        <div class="h-[2px] w-16 bg-gold-500 mx-auto"></div>
     </div>
 
-    <div class="space-y-6">
-        <div class="bg-white p-6 rounded-2xl border border-gold-500/10 shadow-sm">
-            <h3 class="font-bold text-bronze-900 text-lg mb-2">How are the Ganpati Idols shipped?</h3>
-            <p class="text-sm text-bronze-900/70 leading-relaxed">
+    <!-- Accordion Group -->
+    <div class="space-y-4 faq-accordion">
+        <!-- Q1 -->
+        <details class="bg-white rounded-xl border border-gold-500/10 overflow-hidden group">
+            <summary class="flex justify-between items-center p-5 cursor-pointer select-none font-bold text-bronze-900 text-sm sm:text-base hover:text-saffron-500 transition-colors">
+                <span>How are the Ganpati Idols shipped?</span>
+                <span class="chevron text-gold-500 text-xs sm:text-sm"><i class="fa-solid fa-chevron-down"></i></span>
+            </summary>
+            <div class="px-5 pb-5 pt-1 border-t border-gold-500/5 text-xs sm:text-sm text-bronze-900/70 leading-relaxed font-light">
                 All our Ganpati idols are packed using 5-layer heavy corrugated boxes, bubble wraps, and thermocol corner guards to ensure 100% safe transit. We partner with reliable courier services like DHL and FedEx to ensure timely delivery.
-            </p>
-        </div>
+            </div>
+        </details>
 
-        <div class="bg-white p-6 rounded-2xl border border-gold-500/10 shadow-sm">
-            <h3 class="font-bold text-bronze-900 text-lg mb-2">Are the Ganpati Idols completely eco-friendly?</h3>
-            <p class="text-sm text-bronze-900/70 leading-relaxed">
+        <!-- Q2 -->
+        <details class="bg-white rounded-xl border border-gold-500/10 overflow-hidden group">
+            <summary class="flex justify-between items-center p-5 cursor-pointer select-none font-bold text-bronze-900 text-sm sm:text-base hover:text-saffron-500 transition-colors">
+                <span>Are the Ganpati Idols completely eco-friendly?</span>
+                <span class="chevron text-gold-500 text-xs sm:text-sm"><i class="fa-solid fa-chevron-down"></i></span>
+            </summary>
+            <div class="px-5 pb-5 pt-1 border-t border-gold-500/5 text-xs sm:text-sm text-bronze-900/70 leading-relaxed font-light">
                 Yes! Our eco-friendly Ganpati idols are handcrafted using pure Shadu clay (natural river silt) and painted using natural water-soluble colors. They dissolve completely in water in less than 45 minutes during visarjan.
-            </p>
-        </div>
+            </div>
+        </details>
 
-        <div class="bg-white p-6 rounded-2xl border border-gold-500/10 shadow-sm">
-            <h3 class="font-bold text-bronze-900 text-lg mb-2">Can I request customization for handmade gifts?</h3>
-            <p class="text-sm text-bronze-900/70 leading-relaxed">
+        <!-- Q3 -->
+        <details class="bg-white rounded-xl border border-gold-500/10 overflow-hidden group">
+            <summary class="flex justify-between items-center p-5 cursor-pointer select-none font-bold text-bronze-900 text-sm sm:text-base hover:text-saffron-500 transition-colors">
+                <span>Can I request customization for handmade gifts?</span>
+                <span class="chevron text-gold-500 text-xs sm:text-sm"><i class="fa-solid fa-chevron-down"></i></span>
+            </summary>
+            <div class="px-5 pb-5 pt-1 border-t border-gold-500/5 text-xs sm:text-sm text-bronze-900/70 leading-relaxed font-light">
                 Absolutely. We support custom name tags, personalized message cards, and color choices for our decorative trays and gift sets. Please get in touch with us via our contact form or WhatsApp immediately after placing your order.
-            </p>
-        </div>
+            </div>
+        </details>
 
-        <div class="bg-white p-6 rounded-2xl border border-gold-500/10 shadow-sm">
-            <h3 class="font-bold text-bronze-900 text-lg mb-2">What is the return/refund policy?</h3>
-            <p class="text-sm text-bronze-900/70 leading-relaxed">
+        <!-- Q4 -->
+        <details class="bg-white rounded-xl border border-gold-500/10 overflow-hidden group">
+            <summary class="flex justify-between items-center p-5 cursor-pointer select-none font-bold text-bronze-900 text-sm sm:text-base hover:text-saffron-500 transition-colors">
+                <span>What is the return/refund policy?</span>
+                <span class="chevron text-gold-500 text-xs sm:text-sm"><i class="fa-solid fa-chevron-down"></i></span>
+            </summary>
+            <div class="px-5 pb-5 pt-1 border-t border-gold-500/5 text-xs sm:text-sm text-bronze-900/70 leading-relaxed font-light">
                 Due to the fragile and handmade nature of our crafts, we do not accept returns. However, in the rare event that a product arrives damaged in transit, we will send an immediate replacement or issue a full refund upon receiving opening video proof within 24 hours of delivery.
-            </p>
-        </div>
+            </div>
+        </details>
     </div>
 </section>
 {% endblock %}

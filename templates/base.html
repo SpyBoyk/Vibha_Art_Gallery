@@ -56,7 +56,7 @@
         }
         body {
             font-family: 'Outfit', sans-serif;
-            background-color: #FAFAFA;
+            background-color: #FAF9F6;
             color: #1e1b4b;
         }
         .heading-serif {
@@ -64,83 +64,109 @@
         }
         /* Glassmorphism details */
         .glass-nav {
-            background: rgba(250, 250, 250, 0.85);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(124, 58, 237, 0.15);
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
         }
-        /* Hide ALL Google Translate UI completely */
-        .goog-te-banner-frame { display: none !important; }
-        .skiptranslate { display: none !important; }
-        .goog-te-gadget { display: none !important; }
-        #goog-gt-tt, .goog-te-balloon-frame { display: none !important; }
+        /* Premium nav link hover underline */
+        .nav-link {
+            position: relative;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #1e1b4b;
+            transition: color 0.25s;
+            padding-bottom: 2px;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            width: 0;
+            height: 1.5px;
+            background: linear-gradient(90deg, #D4AF37, #0d9488);
+            transition: width 0.3s ease, left 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+            left: 0;
+        }
+        .nav-link:hover {
+            color: #0d9488;
+        }
+        /* Header action icons */
+        .header-icon {
+            width: 34px;
+            height: 34px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            color: #1e1b4b;
+            transition: all 0.25s;
+            font-size: 14px;
+        }
+        .header-icon:hover {
+            background: linear-gradient(135deg, #0d9488, #115e59);
+            color: #fff;
+            border-color: transparent;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(13, 148, 136, 0.25);
+        }
+        /* Hide ALL Google Translate UI */
+        .goog-te-banner-frame, .skiptranslate, .goog-te-gadget,
+        #goog-gt-tt, .goog-te-balloon-frame, .goog-te-menu-value { display: none !important; }
         .goog-text-highlight { background: none !important; box-shadow: none !important; }
-        .goog-te-menu-value { display: none !important; }
         body { top: 0 !important; position: static !important; }
         .VIpgJd-ZVi9od-ORHb-OEVmcd, .VIpgJd-ZVi9od-aZ2wEe-wOHMyf,
         .VIpgJd-ZVi9od-SmfAz, .VIpgJd-ZVi9od-xl07Ob-lTBxed,
         .VIpgJd-ZVi9od-ORHb, .VIpgJd-suEOdc { display: none !important; }
         iframe.skiptranslate, iframe[name="google_translate"] { display: none !important; height: 0 !important; }
-        .goog-te-gadget { font-size: 0 !important; }
-        /* Language toggle styling */
-        .lang-toggle {
-            position: relative;
-            display: inline-flex;
-            align-items: center;
-        }
+        /* Language toggle */
+        .lang-toggle { position: relative; display: inline-flex; align-items: center; }
         .lang-toggle select {
-            appearance: none;
-            -webkit-appearance: none;
-            background: transparent;
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            border-radius: 6px;
-            padding: 3px 22px 3px 6px;
-            font-size: 11px;
-            font-weight: 600;
-            color: #1e1b4b;
-            cursor: pointer;
-            outline: none;
-            transition: border-color 0.2s;
+            appearance: none; -webkit-appearance: none; background: transparent;
+            border: 1px solid rgba(212,175,55,0.25); border-radius: 6px;
+            padding: 3px 22px 3px 6px; font-size: 10px; font-weight: 600;
+            color: #1e1b4b; cursor: pointer; outline: none; transition: border-color 0.2s;
         }
-        .lang-toggle select:focus {
-            border-color: #0d9488;
-        }
+        .lang-toggle select:focus { border-color: #0d9488; }
         .lang-toggle::after {
-            content: '\f0ac';
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
-            position: absolute;
-            right: 6px;
-            font-size: 10px;
-            color: #0d9488;
-            pointer-events: none;
+            content: '\f0ac'; font-family: 'Font Awesome 6 Free'; font-weight: 900;
+            position: absolute; right: 6px; font-size: 9px; color: #0d9488; pointer-events: none;
         }
     </style>
     {% block extra_head %}{% endblock %}
 </head>
 <body class="flex flex-col min-h-screen pb-20 md:pb-0">
 
+
     <!-- Header / Navbar -->
-    <header class="sticky top-0 z-40 glass-nav shadow-sm transition-all duration-300">
+    <header class="sticky top-0 z-40 glass-nav shadow-[0_2px_20px_rgba(0,0,0,0.06)] transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between py-2 sm:py-3">
+            <div class="flex items-center justify-between py-1.5 sm:py-2">
                 <!-- Logo -->
                 <div class="flex-shrink-0">
-                    <a href="{% url 'home' %}" class="flex items-center gap-3">
-                        <img src="{% static 'images/logo.png' %}" alt="Vibha Art Galleries" class="h-24 w-auto object-contain">
+                    <a href="{% url 'home' %}" class="flex items-center gap-2 group">
+                        <img src="{% static 'images/logo.png' %}" alt="Vibha Art Galleries" class="h-14 sm:h-16 w-auto object-contain transition-transform duration-300 group-hover:scale-105">
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
-                <nav class="hidden md:flex space-x-8">
-                    <a href="{% url 'home' %}" class="text-bronze-900 hover:text-saffron-500 font-medium transition-colors">Home</a>
-                    <a href="{% url 'shop' %}" class="text-bronze-900 hover:text-saffron-500 font-medium transition-colors">Shop</a>
-                    <a href="{% url 'categories' %}" class="text-bronze-900 hover:text-saffron-500 font-medium transition-colors">Categories</a>
-                    <a href="{% url 'blog_list' %}" class="text-bronze-900 hover:text-saffron-500 font-medium transition-colors">Our Story</a>
-                    <a href="{% url 'contact' %}" class="text-bronze-900 hover:text-saffron-500 font-medium transition-colors">Contact</a>
+                <nav class="hidden md:flex items-center gap-7">
+                    <a href="{% url 'home' %}" class="nav-link">Home</a>
+                    <a href="{% url 'shop' %}" class="nav-link">Shop</a>
+                    <a href="{% url 'categories' %}" class="nav-link">Categories</a>
+                    <a href="{% url 'blog_list' %}" class="nav-link">Our Story</a>
+                    <a href="{% url 'contact' %}" class="nav-link">Contact</a>
                 </nav>
 
                 <!-- Search & Actions -->
-                <div class="flex items-center space-x-4 sm:space-x-6">
+                <div class="flex items-center gap-2.5 sm:gap-3">
                     <!-- Language Toggle -->
                     <div class="lang-toggle hidden sm:inline-flex">
                         <select id="lang-select" onchange="changeLanguage(this.value)">
@@ -149,35 +175,37 @@
                             <option value="mr">मराठी</option>
                         </select>
                     </div>
+
+                    <!-- Search -->
                     <form action="{% url 'shop' %}" method="GET" class="hidden lg:flex items-center relative">
-                        <input type="text" name="q" placeholder="Search crafts..." value="{{ query|default:'' }}" class="bg-beige-100/80 border border-gold-500/20 rounded-full px-4 py-1.5 pr-10 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 w-60">
-                        <button type="submit" class="absolute right-3 text-bronze-900/60 hover:text-saffron-500">
+                        <input type="text" name="q" placeholder="Search crafts..." value="{{ query|default:'' }}" class="bg-beige-100/60 border border-gold-500/15 rounded-full px-4 py-1.5 pr-9 text-xs focus:outline-none focus:ring-1 focus:ring-gold-500/40 focus:border-gold-500/30 w-48 transition-all focus:w-56">
+                        <button type="submit" class="absolute right-3 text-bronze-900/40 hover:text-saffron-500 text-xs">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
                     </form>
 
                     <!-- User Actions -->
                     {% if user.is_authenticated %}
-                        <a href="{% url 'profile' %}" class="text-bronze-900 hover:text-saffron-500 transition-colors" title="My Profile">
-                            <i class="fa-regular fa-user text-xl"></i>
+                        <a href="{% url 'profile' %}" class="header-icon" title="My Profile">
+                            <i class="fa-regular fa-user"></i>
                         </a>
-                        <a href="{% url 'logout' %}" class="text-bronze-900 hover:text-red-600 transition-colors" title="Logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            <i class="fa-solid fa-arrow-right-from-bracket text-xl"></i>
+                        <a href="{% url 'logout' %}" class="header-icon" title="Logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <i class="fa-solid fa-arrow-right-from-bracket text-[13px]"></i>
                         </a>
                         <form id="logout-form" action="{% url 'logout' %}" method="POST" class="hidden">
                             {% csrf_token %}
                         </form>
                     {% else %}
-                        <a href="{% url 'login' %}" class="text-bronze-900 hover:text-saffron-500 transition-colors" title="Login">
-                            <i class="fa-regular fa-user text-xl"></i>
+                        <a href="{% url 'login' %}" class="header-icon" title="Login">
+                            <i class="fa-regular fa-user"></i>
                         </a>
                     {% endif %}
 
-                    <!-- Cart (Floating/Navbar icon) -->
-                    <a href="{% url 'cart_detail' %}" class="relative text-bronze-900 hover:text-saffron-500 transition-colors">
-                        <i class="fa-solid fa-bag-shopping text-xl"></i>
+                    <!-- Cart -->
+                    <a href="{% url 'cart_detail' %}" class="header-icon relative" title="Shopping Bag">
+                        <i class="fa-solid fa-bag-shopping"></i>
                         {% if cart|length > 0 %}
-                            <span class="absolute -top-2 -right-2 bg-saffron-500 text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold animate-pulse">{{ cart|length }}</span>
+                            <span class="absolute -top-1 -right-1 bg-gradient-to-r from-saffron-500 to-saffron-600 text-white text-[8px] w-4 h-4 rounded-full flex items-center justify-center font-bold shadow-sm">{{ cart|length }}</span>
                         {% endif %}
                     </a>
                 </div>
@@ -205,64 +233,63 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-bronze-900 text-beige-100 mt-auto border-t-2 border-gold-500">
-        <div class="max-w-7xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-12 text-center md:text-left">
+    <footer class="bg-gradient-to-b from-bronze-950 to-bronze-900 text-beige-100 mt-auto border-t border-gold-500/20">
+        <div class="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 sm:gap-12 text-center md:text-left">
                 <!-- Col 1: About & Info -->
-                <div class="flex flex-col items-center md:items-start">
-                    <span class="heading-serif text-2xl font-bold tracking-widest text-gold-500">VIBHA ART GALLERIES</span>
-                    <p class="mt-4 text-sm text-beige-100/70 leading-relaxed">
-                        A trusted manufacturer and trader specializing in Elegant in craft Packaging materials and Jewelry Display Materials products. Crafted to meet the highest standards.
+                <div class="flex flex-col items-center md:items-start space-y-4">
+                    <span class="heading-serif text-xl font-bold tracking-[0.15em] text-gold-500">VIBHA ART GALLERIES</span>
+                    <p class="text-xs text-beige-100/70 leading-relaxed max-w-sm">
+                        A premier manufacturer and designer specializing in elegant jewelry display solutions and premium handcrafted packaging. Crafted to meet the highest standards of luxury.
                     </p>
-                    <div class="flex space-x-4 mt-6 justify-center md:justify-start">
-                        <a href="#" class="text-beige-100/60 hover:text-gold-500 transition-colors"><i class="fa-brands fa-instagram text-xl"></i></a>
-                        <a href="#" class="text-beige-100/60 hover:text-gold-500 transition-colors"><i class="fa-brands fa-facebook text-xl"></i></a>
-                        <a href="#" class="text-beige-100/60 hover:text-gold-500 transition-colors"><i class="fa-brands fa-pinterest text-xl"></i></a>
-                        <a href="https://wa.me/919137339468" class="text-green-500 hover:text-green-400 transition-colors" target="_blank"><i class="fa-brands fa-whatsapp text-xl"></i></a>
+                    <div class="flex space-x-3.5 pt-2">
+                        <a href="#" class="w-8 h-8 rounded-full border border-gold-500/20 flex items-center justify-center text-beige-100/50 hover:text-gold-500 hover:border-gold-500/40 transition-all duration-300"><i class="fa-brands fa-instagram text-sm"></i></a>
+                        <a href="#" class="w-8 h-8 rounded-full border border-gold-500/20 flex items-center justify-center text-beige-100/50 hover:text-gold-500 hover:border-gold-500/40 transition-all duration-300"><i class="fa-brands fa-facebook-f text-sm"></i></a>
+                        <a href="#" class="w-8 h-8 rounded-full border border-gold-500/20 flex items-center justify-center text-beige-100/50 hover:text-gold-500 hover:border-gold-500/40 transition-all duration-300"><i class="fa-brands fa-pinterest-p text-sm"></i></a>
+                        <a href="https://wa.me/919137339468" class="w-8 h-8 rounded-full border border-gold-500/20 flex items-center justify-center text-emerald-500/60 hover:text-emerald-400 hover:border-emerald-500/40 transition-all duration-300" target="_blank"><i class="fa-brands fa-whatsapp text-sm"></i></a>
                     </div>
                 </div>
 
                 <!-- Col 2: Quick Links -->
-                <div>
-                    <h3 class="heading-serif text-gold-500 font-semibold tracking-wider text-sm uppercase mb-4">Shop Collections</h3>
-                    <ul class="space-y-2 text-sm text-beige-100/70">
-                        <li><a href="{% url 'shop' %}?category=section-a-premium-metal-stand-busts" class="hover:text-gold-500 transition-colors">Metal Stand Busts</a></li>
-                        <li><a href="{% url 'shop' %}?category=section-b-multi-size-bust-collection" class="hover:text-gold-500 transition-colors">Multi-Size Busts</a></li>
-                        <li><a href="{% url 'shop' %}?category=section-c-metal-pu-display-stands" class="hover:text-gold-500 transition-colors">Display Stands</a></li>
-                        <li><a href="{% url 'shop' %}" class="hover:text-gold-500 transition-colors">View All Products</a></li>
+                <div class="space-y-4">
+                    <h3 class="heading-serif text-gold-500 font-bold tracking-wider text-xs uppercase">Collections</h3>
+                    <ul class="space-y-2 text-xs text-beige-100/60">
+                        <li><a href="{% url 'shop' %}" class="hover:text-gold-500 transition-colors">Showroom Sets</a></li>
+                        <li><a href="{% url 'shop' %}" class="hover:text-gold-500 transition-colors">Bust Collection</a></li>
+                        <li><a href="{% url 'shop' %}" class="hover:text-gold-500 transition-colors">Display Trays</a></li>
+                        <li><a href="{% url 'shop' %}" class="hover:text-gold-500 transition-colors">All Products</a></li>
                     </ul>
                 </div>
 
                 <!-- Col 3: Customer Care -->
-                <div>
-                    <h3 class="heading-serif text-gold-500 font-semibold tracking-wider text-sm uppercase mb-4">Customer Care</h3>
-                    <ul class="space-y-2 text-sm text-beige-100/70">
-                        <li><a href="{% url 'about' %}" class="hover:text-gold-500 transition-colors">Our Story</a></li>
+                <div class="space-y-4">
+                    <h3 class="heading-serif text-gold-500 font-bold tracking-wider text-xs uppercase">Customer Service</h3>
+                    <ul class="space-y-2 text-xs text-beige-100/60">
+                        <li><a href="{% url 'blog_list' %}" class="hover:text-gold-500 transition-colors">Our Story</a></li>
                         <li><a href="{% url 'contact' %}" class="hover:text-gold-500 transition-colors">Contact Us</a></li>
                         <li><a href="{% url 'faq' %}" class="hover:text-gold-500 transition-colors">FAQs</a></li>
                         <li><a href="{% url 'privacy' %}" class="hover:text-gold-500 transition-colors">Privacy Policy</a></li>
-                        <li><a href="{% url 'terms' %}" class="hover:text-gold-500 transition-colors">Terms & Conditions</a></li>
                     </ul>
                 </div>
 
                 <!-- Col 4: Newsletter -->
-                <div>
-                    <h3 class="heading-serif text-gold-500 font-semibold tracking-wider text-sm uppercase mb-4">Join Our Inner Circle</h3>
-                    <p class="text-sm text-beige-100/70 mb-4 leading-relaxed">
-                        Subscribe to receive launch updates, seasonal discounts, and handcrafted folklore.
+                <div class="space-y-4 flex flex-col items-center md:items-start">
+                    <h3 class="heading-serif text-gold-500 font-bold tracking-wider text-xs uppercase">Join the Circle</h3>
+                    <p class="text-xs text-beige-100/60 leading-relaxed max-w-xs text-center md:text-left">
+                        Subscribe for exclusive catalog updates, new launch previews, and artisanal content.
                     </p>
-                    <form action="{% url 'newsletter_subscribe' %}" method="POST" class="flex max-w-xs mx-auto md:mx-0">
+                    <form action="{% url 'newsletter_subscribe' %}" method="POST" class="flex w-full max-w-xs">
                         {% csrf_token %}
-                        <input type="email" name="email" placeholder="Your email address" required class="bg-bronze-950 border border-gold-500/20 text-beige-100 text-sm px-4 py-2 rounded-l-lg focus:outline-none focus:ring-1 focus:ring-gold-500 w-full">
-                        <button type="submit" class="bg-gold-500 hover:bg-gold-600 text-bronze-900 px-4 py-2 rounded-r-lg font-semibold text-sm transition-colors">
+                        <input type="email" name="email" placeholder="Your email address" required class="bg-bronze-950/60 border border-gold-500/15 text-beige-100 placeholder-beige-100/30 text-xs px-3.5 py-2 rounded-l-lg focus:outline-none focus:ring-1 focus:ring-gold-500/40 w-full transition-all">
+                        <button type="submit" class="bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-r-lg font-bold text-xs transition-colors shadow-sm whitespace-nowrap">
                             Subscribe
                         </button>
                     </form>
                 </div>
             </div>
             
-            <div class="mt-12 pt-8 border-t border-beige-100/10 text-center text-xs text-beige-100/50">
-                <p>&copy; 2026 Vibha Art Galleries. All rights reserved. Designed for Handcrafted Splendor.</p>
+            <div class="mt-12 pt-6 border-t border-gold-500/10 text-center text-[10px] text-beige-100/30">
+                <p>&copy; 2026 Vibha Art Galleries. All rights reserved. Designed for Premium Handcrafted Splendor.</p>
             </div>
         </div>
     </footer>

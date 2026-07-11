@@ -61,11 +61,56 @@ def categories_view(request):
     categories = Category.objects.all()
     return render(request, 'products/categories.html', {'categories': categories})
 
+def get_humanized_description(product):
+    desc = product.description or ""
+    color = ""
+    features = ""
+    best_for = ""
+    moq = ""
+    
+    if "Color:" in desc:
+        parts = desc.split("Color:")
+        color = parts[1].split(".")[0].strip()
+    
+    if "Features:" in desc:
+        parts = desc.split("Features:")
+        features = parts[1].split(".")[0].strip().replace(" | ", ", ")
+    
+    if "Best For:" in desc:
+        parts = desc.split("Best For:")
+        best_for = parts[1].split(".")[0].strip().replace(" + ", " and ")
+        
+    if "MOQ:" in desc:
+        parts = desc.split("MOQ:")
+        moq = parts[1].split(".")[0].strip()
+        
+    intro = desc.split(".")[0] if desc else "A premium presentation display solution"
+    human_desc = f"{intro}. "
+    
+    if color:
+        human_desc += f"Draped in a luxury {color.lower()} finish, this display accessory offers an elegant background contrast that accentuates the details and beauty of your precious jewelry items. "
+    
+    if features:
+        human_desc += f"It has been meticulously crafted with showroom counters and boutique displays in mind, incorporating features like {features.lower()} to ensure ease of styling and secure presentation. "
+    
+    if best_for:
+        human_desc += f"This display solution is highly recommended and best suited for {best_for.lower()}, helping elevate visual merchandising setups and grab shoppers' attention. "
+        
+    if moq:
+        human_desc += f"This product is available for wholesale and retail ordering with a minimum order quantity of {moq}."
+    else:
+        human_desc += "Perfect for boutique setups and luxury retail showrooms looking to enhance their counter space and customer presentations."
+        
+    return human_desc
+
 def product_detail_view(request, slug):
     product = get_object_or_404(Product, slug=slug, is_active=True)
     images = product.images.all()
     reviews = product.reviews.all().order_by('-created_at')
     related_products = Product.objects.filter(category=product.category, is_active=True).exclude(id=product.id)[:4]
+
+    # Dynamic human-friendly description
+    product.human_description = get_humanized_description(product)
 
     # Handle review submission
     if request.method == 'POST':

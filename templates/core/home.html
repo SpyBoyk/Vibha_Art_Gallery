@@ -59,27 +59,27 @@
         <div class="h-[2px] w-20 bg-amber-500 mx-auto rounded-full"></div>
     </div>
     
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {% for cat in categories %}
-            <a href="{% url 'shop' %}?category={{ cat.slug }}" class="group bg-white rounded-3xl border border-teal-50/80 overflow-hidden shadow-sm hover:shadow-xl hover:border-teal-500/20 transition-all duration-300 flex flex-col">
-                <div class="aspect-video w-full overflow-hidden bg-slate-100 relative">
+            <a href="{% url 'shop' %}?category={{ cat.slug }}" class="group bg-white rounded-xl border border-gold-500/10 overflow-hidden shadow-sm hover:shadow-lg transition-all duration-350 flex flex-col">
+                <div class="aspect-video w-full overflow-hidden bg-slate-50 relative">
                     {% if cat.image %}
                         <img src="{{ cat.image.url }}" alt="{{ cat.name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
                     {% else %}
                         <div class="w-full h-full flex items-center justify-center bg-teal-50">
-                            <i class="fa-solid fa-images text-teal-300 text-3xl"></i>
+                            <i class="fa-solid fa-images text-teal-300 text-2xl"></i>
                         </div>
                     {% endif %}
-                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent"></div>
-                    <div class="absolute bottom-4 left-6">
-                        <span class="text-xs font-bold text-amber-400 uppercase tracking-widest block">Collection</span>
-                        <h3 class="font-serif text-lg font-bold text-white mt-1">{{ cat.name }}</h3>
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/70 to-transparent"></div>
+                    <div class="absolute bottom-3 left-4">
+                        <span class="text-[9px] font-bold text-amber-400 uppercase tracking-widest block">Collection</span>
+                        <h3 class="font-serif text-sm font-bold text-white mt-0.5">{{ cat.name }}</h3>
                     </div>
                 </div>
-                <div class="p-6 flex-grow flex flex-col justify-between">
-                    <p class="text-xs text-slate-500 leading-relaxed mb-4">{{ cat.description }}</p>
-                    <span class="text-xs font-bold text-teal-600 group-hover:text-teal-700 transition-colors flex items-center gap-1">
-                        View Products <i class="fa-solid fa-arrow-right text-[10px] group-hover:translate-x-1 transition-transform"></i>
+                <div class="p-3.5 flex-grow flex flex-col justify-between">
+                    <p class="text-[11px] text-slate-500 leading-relaxed mb-3 line-clamp-2">{{ cat.description }}</p>
+                    <span class="text-[10px] font-bold text-teal-600 group-hover:text-teal-700 transition-colors flex items-center gap-1">
+                        View Products <i class="fa-solid fa-arrow-right text-[8px] group-hover:translate-x-1 transition-transform"></i>
                     </span>
                 </div>
             </a>
@@ -128,40 +128,78 @@
     
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
         {% for product in featured_products %}
-            <div class="group bg-white rounded-3xl border border-teal-50/50 p-4 shadow-sm hover:shadow-md transition-shadow relative flex flex-col justify-between">
+            <div class="group bg-white rounded-2xl border border-slate-100 p-4 shadow-sm hover:shadow-xl transition-all duration-300 relative flex flex-col justify-between h-full">
                 <div>
-                    <!-- Badge -->
-                    <span class="absolute top-6 left-6 z-10 bg-teal-600 text-white text-[10px] font-bold px-3 py-1.5 rounded-full uppercase tracking-wider shadow">
-                        VAG Elite
-                    </span>
+                    <!-- Badges -->
+                    <div class="absolute top-6 left-6 z-10 flex flex-col gap-1">
+                        {% if product.has_discount %}
+                            <span class="bg-saffron-500 text-white text-[9px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider shadow-sm">
+                                {{ product.get_discount_percentage }}% Off
+                            </span>
+                        {% endif %}
+                        {% if product.is_featured %}
+                            <span class="bg-teal-600 text-white text-[9px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider shadow-sm">
+                                Elite
+                            </span>
+                        {% endif %}
+                    </div>
+                    
                     <!-- Image -->
-                    <div class="aspect-square w-full rounded-2xl overflow-hidden bg-slate-50 relative mb-4">
+                    <div class="aspect-square w-full rounded-xl overflow-hidden bg-slate-50 relative mb-4">
                         {% if product.images.exists %}
                             <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+                        {% else %}
+                            <div class="w-full h-full flex items-center justify-center bg-teal-50">
+                                <i class="fa-solid fa-gifts text-slate-300 text-4xl"></i>
+                            </div>
                         {% endif %}
-                        <a href="{% url 'product_detail' product.id %}" class="absolute inset-0 bg-slate-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                            <span class="bg-white text-slate-900 font-bold text-xs px-6 py-2.5 rounded-full shadow-lg">View Details</span>
+                        <a href="{% url 'product_detail' product.slug %}" class="absolute inset-0 bg-slate-950/25 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                            <span class="bg-white text-slate-900 font-bold text-xs px-5 py-2 rounded-full shadow-md">View Details</span>
                         </a>
                     </div>
-                    <!-- Brand info -->
-                    <span class="text-[10px] text-amber-600 font-bold uppercase tracking-wider block">{{ product.category.name }}</span>
+                    
+                    <!-- Category -->
+                    <span class="text-[9px] text-teal-600 font-bold uppercase tracking-wider block mb-1">{{ product.category.name }}</span>
+                    
                     <!-- Title -->
-                    <h3 class="font-serif text-sm font-bold text-slate-900 mt-1 line-clamp-1">
-                        <a href="{% url 'product_detail' product.id %}" class="hover:text-teal-600 transition-colors">{{ product.name }}</a>
+                    <h3 class="text-sm font-bold text-slate-800 line-clamp-1">
+                        <a href="{% url 'product_detail' product.slug %}" class="hover:text-teal-600 transition-colors">{{ product.name }}</a>
                     </h3>
-                </div>
-                <!-- Action Footer -->
-                <div class="mt-4 pt-4 border-t border-slate-50 flex items-center justify-between">
-                    <div>
-                        <span class="text-xs text-slate-400 block">Rate</span>
-                        <span class="text-base font-bold text-slate-900">₹{{ product.price }}</span>
+                    
+                    <!-- Ratings (Amazon style) -->
+                    <div class="flex items-center gap-1.5 mt-1.5 mb-2 text-xs">
+                        <div class="flex items-center text-amber-400">
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <span class="font-bold text-slate-700 text-xs">{{ product.average_rating }}</span>
+                        <span class="text-slate-400">({{ product.review_count }})</span>
+                        <span class="text-[9px] font-semibold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded ml-auto">Free Delivery</span>
                     </div>
-                    <form action="{% url 'cart_add' product.id %}" method="POST">
-                        {% csrf_token %}
-                        <button type="submit" class="bg-teal-50 hover:bg-teal-100 text-teal-700 w-10 h-10 rounded-full flex items-center justify-center transition-colors">
-                            <i class="fa-solid fa-shopping-bag"></i>
-                        </button>
-                    </form>
+                </div>
+                
+                <!-- Pricing & Action Footer (Flipkart style) -->
+                <div class="mt-auto pt-3 border-t border-slate-100 flex items-center justify-between">
+                    <div>
+                        {% if product.has_discount %}
+                            <div class="flex items-baseline gap-1.5">
+                                <span class="text-base font-bold text-slate-900">₹{{ product.discount_price }}</span>
+                                <span class="text-xs text-slate-400 line-through">₹{{ product.price }}</span>
+                            </div>
+                        {% else %}
+                            <span class="text-base font-bold text-slate-900">₹{{ product.price }}</span>
+                        {% endif %}
+                    </div>
+                    
+                    {% if product.stock > 0 %}
+                        <form action="{% url 'cart_add' product.id %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="bg-teal-50 hover:bg-teal-600 hover:text-white text-teal-700 w-9 h-9 rounded-full flex items-center justify-center transition-colors shadow-sm" title="Add to Bag">
+                                <i class="fa-solid fa-shopping-cart text-xs"></i>
+                            </button>
+                        </form>
+                    {% else %}
+                        <span class="text-[10px] font-bold text-red-500 uppercase">Sold Out</span>
+                    {% endif %}
                 </div>
             </div>
         {% endfor %}
