@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,7 +15,7 @@
         }
 
         body {
-            background-image: url('/static/images/bg.jpg');
+            background-image: url('{% static "images/bg.jpg" %}');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -23,17 +24,18 @@
             align-items: center;
             flex-direction: column;
             font-family: 'Outfit', sans-serif;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
-            overflow: hidden;
+            overflow-y: auto;
             position: relative;
+            padding: 20px 0;
         }
 
         h1 {
             font-family: 'Cinzel', serif;
             font-weight: 700;
             margin: 0;
-            color: #1e1b4b;
+            color: #115e59;
             font-size: 26px;
         }
 
@@ -63,13 +65,13 @@
         }
         
         a:hover {
-            color: #7C3AED;
+            color: #0d9488;
         }
 
         button {
             border-radius: 25px;
-            border: 1px solid #7C3AED;
-            background-color: #7C3AED;
+            border: 1px solid #0d9488;
+            background-color: #0d9488;
             color: #FFFFFF;
             font-size: 11px;
             font-weight: bold;
@@ -82,8 +84,8 @@
         }
         
         button:hover {
-            background-color: #6D28D9;
-            border-color: #6D28D9;
+            background-color: #0f766e;
+            border-color: #0f766e;
         }
 
         button:active {
@@ -117,8 +119,8 @@
         }
 
         input {
-            background-color: #f8fafc;
-            border: 1px solid #e2e8f0;
+            background-color: #f0fdfa;
+            border: 1px solid #ccfbf1;
             padding: 12px 15px;
             margin: 6px 0;
             width: 100%;
@@ -130,7 +132,7 @@
         }
         
         input:focus {
-            border-color: #7C3AED;
+            border-color: #0d9488;
             background-color: #fff;
         }
 
@@ -141,11 +143,12 @@
                         0 10px 20px rgba(0,0,0,0.15);
             position: relative;
             overflow: hidden;
-            width: 920px;
-            max-width: 100%;
-            min-height: 580px;
+            width: 96%;
+            max-width: 1050px;
+            min-height: 500px;
+            margin: 40px 0;
             z-index: 10;
-            border: 1px solid rgba(124, 58, 237, 0.05);
+            border: 1px solid rgba(13,148,136,0.1);
         }
 
         .form-container {
@@ -207,8 +210,8 @@
         }
 
         .overlay {
-            background: #7C3AED;
-            background: linear-gradient(135deg, #1e1b4b 0%, #7C3AED 50%, #D4AF37 100%);
+            background: #0d9488;
+            background: linear-gradient(135deg, #115e59 0%, #0d9488 50%, #d97706 100%);
             background-repeat: no-repeat;
             background-size: cover;
             color: #FFFFFF;
@@ -244,7 +247,7 @@
         }
         
         .overlay-panel p {
-            color: rgba(255, 255, 255, 0.8);
+            color: rgba(255, 255, 255, 0.9);
         }
 
         .overlay-left {
@@ -277,13 +280,22 @@
             margin: 0 5px;
             height: 40px;
             width: 40px;
-            color: #1e1b4b;
+            color: #115e59;
             transition: border-color 0.2s, color 0.2s;
         }
 
         .social-container a:hover {
-            border-color: #7C3AED;
-            color: #7C3AED;
+            border-color: #0d9488;
+            color: #0d9488;
+        }
+
+        /* Global scrollbar hiding for ALL elements */
+        * {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+        *::-webkit-scrollbar {
+            display: none;  /* Chrome, Safari, Opera */
         }
 
         .error-msg {
@@ -299,7 +311,7 @@
             left: 25px;
             font-size: 12px;
             font-weight: bold;
-            color: #7C3AED;
+            color: #0d9488;
             z-index: 10;
             display: flex;
             align-items: center;
@@ -309,20 +321,96 @@
         
         .back-gallery:hover {
             transform: translateX(-3px);
-            color: #6D28D9;
+            color: #0f766e;
         }
-        
-        /* INCREASED Overlay Illustration Size */
+
         .overlay-img {
-            width: 220px;
-            height: 220px;
+            width: 150px;
+            height: 150px;
             object-fit: cover;
             border-radius: 20px;
-            border: 3px solid rgba(255, 255, 255, 0.25);
-            margin-bottom: 25px;
-            box-shadow: 0 12px 24px rgba(0,0,0,0.2);
-            transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
+            border: 3px solid rgba(255, 255, 255, 0.4);
+            margin-bottom: 20px;
+            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+            transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
             opacity: 1;
+        }
+
+        .mobile-toggle-wrapper {
+            display: none;
+            font-size: 13px;
+            margin-top: 20px;
+            color: #64748b;
+        }
+
+        .mobile-toggle-btn {
+            color: #0d9488;
+            font-weight: bold;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        /* MOBILE STYLES */
+        @media (max-width: 768px) {
+            body {
+                background-image: none;
+                background-color: #FFFFFF;
+                padding: 0;
+            }
+
+            .container {
+                width: 100%;
+                height: 100vh;
+                border-radius: 0;
+                min-height: 100vh;
+                box-shadow: none;
+                border: none;
+            }
+
+            .form-container {
+                width: 100% !important;
+                position: absolute;
+                top: 0;
+                height: 100%;
+                transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s ease-in-out;
+            }
+
+            .sign-in-container {
+                opacity: 1;
+                z-index: 2;
+                transform: translateX(0);
+            }
+
+            .container.right-panel-active .sign-in-container {
+                opacity: 0;
+                z-index: 1;
+                transform: translateX(-100%) !important;
+            }
+
+            .sign-up-container {
+                width: 100% !important;
+                opacity: 0;
+                z-index: 1;
+                transform: translateX(100%) !important;
+            }
+
+            .container.right-panel-active .sign-up-container {
+                opacity: 1;
+                z-index: 2;
+                transform: translateX(0) !important;
+            }
+
+            .overlay-container {
+                display: none !important;
+            }
+
+            .mobile-toggle-wrapper {
+                display: block;
+            }
+
+            form {
+                padding: 0 24px;
+            }
         }
     </style>
 </head>
@@ -357,6 +445,10 @@
                 <input type="password" name="password1" placeholder="Password" required />
                 <input type="password" name="password2" placeholder="Confirm Password" required />
                 <button type="submit">Sign Up</button>
+
+                <div class="mobile-toggle-wrapper">
+                    Already have an account? <span class="mobile-toggle-btn" id="mobile-to-signin">Sign In</span>
+                </div>
             </form>
         </div>
 
@@ -388,6 +480,10 @@
                 <input type="password" name="password" placeholder="Password" required />
                 <a href="#">Forgot your password?</a>
                 <button type="submit">Sign In</button>
+
+                <div class="mobile-toggle-wrapper">
+                    Don't have an account? <span class="mobile-toggle-btn" id="mobile-to-signup">Sign Up</span>
+                </div>
             </form>
         </div>
 
@@ -395,13 +491,13 @@
         <div class="overlay-container">
             <div class="overlay">
                 <div class="overlay-panel overlay-left">
-                    <img id="overlay-left-img" src="/static/images/kanthi_har_illustration.png" alt="Kanthi Har" class="overlay-img">
+                    <img id="overlay-left-img" src="{% static 'images/kanthi_har_illustration.png' %}" alt="Kanthi Har" class="overlay-img">
                     <h1>Join the Circle</h1>
                     <p>Enter your details and start your journey with us to explore premium Indian handcrafted legacy.</p>
                     <button class="ghost" id="signIn">Sign In</button>
                 </div>
                 <div class="overlay-panel overlay-right">
-                    <img id="overlay-right-img" src="/static/images/login_illustration.png" alt="Clay Ganesha" class="overlay-img">
+                    <img id="overlay-right-img" src="{% static 'images/login_illustration.png' %}" alt="Clay Ganesha" class="overlay-img">
                     <h1>Welcome Back!</h1>
                     <p>Log in to access your orders, track shipping, and continue exploring traditional treasures.</p>
                     <button class="ghost" id="signUp">Sign Up</button>
@@ -426,14 +522,33 @@
             window.history.pushState(null, "", "{% url 'login' %}");
         });
 
+        // Mobile Toggles
+        const mobileToSignUp = document.getElementById('mobile-to-signup');
+        const mobileToSignIn = document.getElementById('mobile-to-signin');
+
+        if (mobileToSignUp) {
+            mobileToSignUp.addEventListener('click', (e) => {
+                e.preventDefault();
+                container.classList.add("right-panel-active");
+                window.history.pushState(null, "", "{% url 'register' %}");
+            });
+        }
+        if (mobileToSignIn) {
+            mobileToSignIn.addEventListener('click', (e) => {
+                e.preventDefault();
+                container.classList.remove("right-panel-active");
+                window.history.pushState(null, "", "{% url 'login' %}");
+            });
+        }
+
         // Continuous Image Slideshow Rotation
         const overlayImagesLeft = [
-            '/static/images/kanthi_har_illustration.png',
-            '/static/images/jewellery_illustration.jfif'
+            '{% static "images/kanthi_har_illustration.png" %}',
+            '{% static "images/jewellery_illustration.jfif" %}'
         ];
         const overlayImagesRight = [
-            '/static/images/login_illustration.png',
-            '/static/images/pooja_illustration.jfif'
+            '{% static "images/login_illustration.png" %}',
+            '{% static "images/pooja_illustration.jfif" %}'
         ];
         
         let leftIndex = 0;
@@ -443,28 +558,31 @@
         const rightImgEl = document.getElementById('overlay-right-img');
 
         function rotateLeftOverlay() {
-            leftImgEl.style.opacity = '0';
-            leftImgEl.style.transform = 'scale(0.95)';
-            setTimeout(() => {
-                leftIndex = (leftIndex + 1) % overlayImagesLeft.length;
-                leftImgEl.src = overlayImagesLeft[leftIndex];
-                leftImgEl.style.opacity = '1';
-                leftImgEl.style.transform = 'scale(1)';
-            }, 600);
+            if (leftImgEl) {
+                leftImgEl.style.opacity = '0';
+                leftImgEl.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    leftIndex = (leftIndex + 1) % overlayImagesLeft.length;
+                    leftImgEl.src = overlayImagesLeft[leftIndex];
+                    leftImgEl.style.opacity = '1';
+                    leftImgEl.style.transform = 'scale(1)';
+                }, 400);
+            }
         }
 
         function rotateRightOverlay() {
-            rightImgEl.style.opacity = '0';
-            rightImgEl.style.transform = 'scale(0.95)';
-            setTimeout(() => {
-                rightIndex = (rightIndex + 1) % overlayImagesRight.length;
-                rightImgEl.src = overlayImagesRight[rightIndex];
-                rightImgEl.style.opacity = '1';
-                rightImgEl.style.transform = 'scale(1)';
-            }, 600);
+            if (rightImgEl) {
+                rightImgEl.style.opacity = '0';
+                rightImgEl.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    rightIndex = (rightIndex + 1) % overlayImagesRight.length;
+                    rightImgEl.src = overlayImagesRight[rightIndex];
+                    rightImgEl.style.opacity = '1';
+                    rightImgEl.style.transform = 'scale(1)';
+                }, 400);
+            }
         }
 
-        // Run rotations every 4.5 seconds
         setInterval(rotateLeftOverlay, 4500);
         setInterval(rotateRightOverlay, 4500);
     </script>
